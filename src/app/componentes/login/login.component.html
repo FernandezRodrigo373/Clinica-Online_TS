@@ -1,0 +1,43 @@
+<div class="login-container" style= "--background: #00d3be">
+        <div *ngIf="mensaje" [ngClass]="mensaje?.tipo" class="mensaje">
+      {{ mensaje.texto }}
+    </div>
+
+  <div class="login-overlay">
+
+   <div class="inicio">
+     <h2>Inicio de sesión</h2>
+     <img src="/assets/logopage.png" alt="Imagen de inicio" class="login-image" />
+     
+    </div>
+
+ 
+    <form [formGroup]="formularioLogin" (ngSubmit)="ingresar()">
+      <div class="form-item">
+
+        <label for="correo">Correo Electrónico</label>
+        <input id="correo" formControlName="correo" type="email" placeholder="Introduce tu correo" />
+      </div>
+  
+      <div class="form-item">
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" formControlName="contrasena" type="password" placeholder="Introduce tu contraseña" />
+      </div>
+  
+      <button type="submit" class="submit-btn">Ingresar</button>
+    </form>
+  
+    <div class="autocompletar">
+      <button type="button" (click)="autocompletar('rodrigo@fernandez.com')">Usuario 1</button>
+      <button type="button" (click)="autocompletar('camila@iarussi.com')">Usuario 2</button>
+      <button type="button" (click)="autocompletar('leo@messi.com')">Usuario 3</button>
+    </div>
+
+    <div class="registro-link">
+      <span>¿No tienes cuenta?</span>
+      <button type="button" (click)="irARegistro()">Regístrate</button>
+    </div>
+    </div>
+  </div>
+
+  

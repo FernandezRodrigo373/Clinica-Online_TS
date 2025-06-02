@@ -1,0 +1,200 @@
+.ahorcado-contenedor
+{
+  overflow: hidden;
+  height: 100vh;
+
+  
+}
+.teclado button {
+  margin: 5px;
+  width: 100px;
+  height: 100px;
+  top: 10%;
+}
+
+.boton-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+
+.teclado {
+
+  margin-bottom: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+
+
+.fila {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fila button {
+  background-color: #eeeeee;
+  border: 1px solid #9fddb7;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.fila button:hover {
+  background-color: #0aa10a;
+}
+
+.fila button:disabled {
+  background-color: #ff0000;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.fila button.correcta {
+  background-color: #0aa10a; 
+  color: white;
+}
+
+.fila button.incorrecta {
+  background-color: #ff0000; 
+  color: white;
+}
+
+.palabra-secreta {
+  font-size: 48px;
+  letter-spacing: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+
+
+.palabra-secreta span {
+
+  min-width: 30px;
+  text-transform: uppercase;
+}
+
+.home-container h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #333333;
+}
+
+.letras {
+  margin-top: 20px;
+  font-size: 20px;
+  text-align: center;
+  color: #444444;
+}
+
+.mensaje {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 20px 40px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: zoomIn 0.4s ease;
+  text-align: center;
+}
+
+.victoria {
+  background-color: #d4edda;
+  color: #155724;
+  border: 3px solid #28a745;
+}
+
+.derrota {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 3px solid #dc3545;
+}
+
+
+.imagen-ahorcado {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-left: 10px;
+  margin-bottom: 200px;
+}
+.imagen-ahorcado img {
+  max-width: 400px;
+  height: 400px;
+}
+
+.mensaje-container {
+  position: fixed;
+  margin: 20px auto;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  
+}
+
+
+.imagen-palabra {
+  display: flex;
+  align-items: center;
+  margin-top: 200px;
+  margin-bottom: 210px;
+  width: 100%;
+  position: relative;
+}
+
+.boton-reiniciar {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #f8d7f3;
+  color: #721c6e;
+  border: 3px solid #dc359c;
+  font-weight: 700;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 50px;
+}
+
+.boton-reiniciar:hover {
+  background-color: #0056b3;
+}
+
+
+.letras
+{
+  color: #a32d2d;
+  
+}
+
+
+

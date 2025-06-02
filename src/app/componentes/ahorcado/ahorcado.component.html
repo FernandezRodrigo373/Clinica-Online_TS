@@ -1,0 +1,84 @@
+<div class="ahorcado-contenedor">
+  <div style="text-align: center;" class="home-container">
+    <h1>Bienvenido al ahorcado</h1>
+  </div>
+
+  
+  <div class="contenido-juego">
+    <div class="letras">
+      Letras usadas: {{ letrasUsadas.join(', ') }}
+      <br>
+      Errores(max 5): {{ errores }}
+  </div>
+
+
+  
+      <div class="mensaje-container" *ngIf="estadoJuego !== 'jugando'">
+        <div *ngIf="estadoJuego === 'ganaste'" class="mensaje victoria">¡Ganaste!</div>
+        <div *ngIf="estadoJuego === 'perdiste'" class="mensaje derrota">¡Perdiste! La palabra era: {{ palabraSecreta }}</div>
+        <button class="boton-reiniciar" (click)="iniciarJuego()">Volver a jugar</button>
+      </div>
+
+
+  <div class="imagen-palabra">
+      <div class="imagen-ahorcado">
+        <img style="border: 2px solid #28a3a7; border-radius: 15px;" [src]="'/assets/ahorcado' + errores + '.png'" alt="Ahorcado" />
+      </div>
+
+      <div class="palabra-secreta">
+        <span *ngFor="let letra of palabraSecreta.split('')">
+          {{ letrasCorrectas.includes(letra) ? letra : '_' }}
+        </span>
+      </div>
+  </div>
+
+
+
+  <div class="teclado">
+  <div class="fila">
+    <button
+      *ngFor="let letra of fila1"
+      (click)="seleccionarLetra(letra)"
+      [disabled]="letrasUsadas.includes(letra)"
+      [ngClass]="{
+        'correcta': letrasEstado[letra] === 'correcta',
+        'incorrecta': letrasEstado[letra] === 'incorrecta'
+      }"
+    >
+      {{ letra }}
+    </button>
+  </div>
+  <div class="fila">
+    <button
+      *ngFor="let letra of fila2"
+      (click)="seleccionarLetra(letra)"
+      [disabled]="letrasUsadas.includes(letra)"
+      [ngClass]="{
+        'correcta': letrasEstado[letra] === 'correcta',
+        'incorrecta': letrasEstado[letra] === 'incorrecta'
+      }"
+    >
+      {{ letra }}
+    </button>
+  </div>
+    <div class="fila">
+    <button
+      *ngFor="let letra of fila3"
+      (click)="seleccionarLetra(letra)"
+      [disabled]="letrasUsadas.includes(letra)"
+      [ngClass]="{
+        'correcta': letrasEstado[letra] === 'correcta',
+        'incorrecta': letrasEstado[letra] === 'incorrecta'
+      }"
+    >
+      {{ letra }}
+    </button>
+  </div>
+  </div>
+
+
+
+  </div>
+
+  <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+</div>

@@ -1,28 +1,32 @@
 import { Routes } from '@angular/router';
-import { AboutComponent } from './componentes/about/about.component';
+import { LoginComponent } from './componentes/login/login.component';
 import { HomeComponent } from './componentes/home/home.component';
-import { PageNotFoundComponent } from './componentes/page-not-found/page-not-found.component';
-import { ProductDetailComponent } from './componentes/product-detail/product-detail.component';
-import { ProductsComponent } from './componentes/products/products.component';
+import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
+import { RegistroComponent } from './componentes/registro/registro.component';
+import { PreguntadosComponent } from './componentes/preguntados/preguntados.component';
+import { MayorMenorComponent } from './componentes/mayor-menor/mayor-menor.component';
+import { AhorcadoComponent } from './componentes/ahorcado/ahorcado.component';
+
 
 
 export const routes: Routes = [
-    // Si le ponemos 'prefix' nos va a arrojar un error en la consola de redireccion infinita
-    { path: '', redirectTo: '/home', pathMatch: "full" },
-    { path: 'home', component: HomeComponent },
-    { path: 'about', component: AboutComponent },
-    {
-        path: 'products', component: ProductsComponent,
-        children:
-            [
-                {
-                    path: "detalle/:productId",
-                    component: ProductDetailComponent
-                }
-            ]
-    },
-    // La ruta comodin debe ir siempre al final
-    { path: '**', component: PageNotFoundComponent },
+
+    {path: '',pathMatch:'full', redirectTo:"login"},
+    {path: 'login', loadComponent:() => import('./componentes/login/login.component').then(c => c.LoginComponent)},
+    {path: 'home', loadComponent:() => import('./componentes/home/home.component').then(c => c.HomeComponent)},
+    {path: 'quien-soy',loadComponent:() => import('./componentes/quien-soy/quien-soy.component').then(c => c.QuienSoyComponent)},
+    {path: 'registro', loadComponent:() => import('./componentes/registro/registro.component').then(c => c.RegistroComponent)},
+    {path: 'juegos', loadChildren:() => import('./juegos/juegos.module').then(m => m.JuegosModule)},
+
+
+
+    
+
+
+
+
+
+
     
 ];
 

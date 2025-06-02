@@ -1,0 +1,161 @@
+.login-container {
+  background-image: url('/assets/fondo.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  backdrop-filter: blur(4px); 
+  width: 100vw;                   
+  height: 100vh;                     
+  margin: 0;
+  padding: 0;
+
+}
+
+.inicio
+{
+    display: flex;
+    gap: 80px;
+
+}
+
+.login-image
+{
+  height: 20%;
+  width: 20%;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: #00d3be;
+  margin-top: 20px;
+}
+
+.form-item {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  color: white;
+  outline: none;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+.submit-btn {
+  margin-top: 10px;
+  background-color: #00d3be;
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #00d3be;
+}
+
+.autocompletar {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.autocompletar button {
+  background-color: #333;
+  color: white;
+  border: 1px solid #00d3be;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.autocompletar button:hover {
+  background-color: #00d3be;
+  color: black;
+}
+
+.registro-link {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.registro-link span {
+  margin-right: 8px;
+}
+
+.registro-link button {
+  background: none;
+  border: none;
+  color: #00d3be;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.registro-link button:hover {
+  text-decoration: underline;
+}
+
+.login-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+}
+
+
+
+.mensaje {
+  top: 60px;
+  position: absolute;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 1px;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 35%; 
+  z-index: 10;
+  margin-bottom: 20px;
+
+}
+
+.mensaje.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.mensaje.correcto {
+  background-color: #d4edda;
+  color: #155724;
+}

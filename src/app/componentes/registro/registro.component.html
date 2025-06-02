@@ -1,0 +1,33 @@
+<div class="registro-container">
+  <div class="registro-overlay">
+
+    <div class="inicio">
+      <h2>Registro</h2>
+      <img src="/assets/logopage.png" alt="Imagen de registro" class="registro-image" />
+    </div>
+
+   
+    <div *ngIf="mensaje" [ngClass]="mensaje.tipo" class="mensaje">
+      {{ mensaje.texto }}
+    </div>
+
+    <form [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
+      <div class="form-item">
+        <label for="correo">Correo Electrónico</label>
+        <input id="correo" formControlName="correo" type="email" placeholder="Introduce tu correo" />
+      </div>
+
+      <div class="form-item">
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" formControlName="contrasena" type="password" placeholder="Introduce tu contraseña" />
+      </div>
+
+      <button type="submit" class="submit-btn">Registrarse</button>
+    </form>
+
+    <div class="registro-link">
+      <span>¿Ya tienes cuenta?</span>
+      <button type="button" (click)="irALogin()">Loguearse</button>
+    </div>
+  </div>
+</div>

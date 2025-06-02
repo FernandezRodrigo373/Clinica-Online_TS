@@ -1,0 +1,89 @@
+    <h1 class="titulo">Bienvenido a mi juego</h1>
+    <h2 class="sub-titulo">Tendras que adivinar a la persona argentina</h2>
+
+
+<div class="container">
+
+  <div class="columna izquierda">
+    <h3>Usuario</h3>
+    <p>Nombre: prueba</p>
+  </div>
+
+  <div class="columna centro">
+    <h2>¿Quién es la persona argentina?</h2>
+
+    <input type="text" placeholder="Adivina al argentino" [(ngModel)]="filtro" [disabled]="juegoFinalizado" />
+
+    <ul>
+      <li *ngFor="let persona of personasFiltrados()" (click)="adivinar(persona.nombre)" class="personaje-item">
+        {{ persona.nombre }}
+      </li>
+    </ul>
+
+    <div *ngFor="let intento of intentos" class="intento">
+      <div class="nombre"><strong>Nombre:</strong> {{ intento.nombre }}</div>
+      <div [ngClass]="getClaseResultado(intento.resultado.categoria)">
+        <strong>Categoría:</strong> {{ intento.categoria }}
+      </div>
+      <div [ngClass]="getClaseResultado(intento.resultado.genero)">
+        <strong>Género:</strong> {{ intento.genero }}
+      </div>
+      <div [ngClass]="getClaseResultado(intento.resultado.tipo)">
+        <strong>Tipo:</strong> {{ intento.tipo }}
+      </div>
+      <div [ngClass]="getClaseResultado(intento.resultado.edad)">
+        <strong>Edad:</strong> {{ intento.edad }}
+      </div>
+      <div [ngClass]="getClaseResultado(intento.resultado.estado)">
+        <strong>Estado:</strong> {{ intento.estado }}
+      </div>
+    </div>
+
+    <div class="final" *ngIf="juegoFinalizado">
+      <div class="final-contenido">
+        <h2>{{ mensajeFinal }}</h2>
+        <img [src]="personajeOculto.imagen" alt="Personaje secreto" class="imagen-final" />
+        <button (click)="reiniciarJuego()">Volver a jugar</button>
+      </div>
+    </div>
+
+    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+  </div>
+
+  <div class="columna derecha">
+    <h2>Personajes posibles</h2>
+        <li>Lionel Messi</li>
+        <li>Guillermo Francella</li>
+        <li>Mirtha Legrand</li>
+        <li>Javier Milei</li>
+        <li>Luis Alberto Spinetta</li>
+        <li>Mercedes Sosa</li>
+        <li>Diego Maradona</li>
+        <li>Susana Gimenez</li>
+        <li>Carlos Gardel</li>
+        <li>Ricardo Fort</li>
+        <li>Hijitus</li>
+        <li>María Becerra</li>
+        <li>Tini Stoessel</li>
+        <li>Angel Di María</li>
+        <li>Ciro Martinez</li>
+        <li>Cristina Fernández de Kirchner</li>
+        <li>Juan Domingo Perón</li>
+        <li>Eva Perón</li>
+        <li>Gustavo Cerati</li>
+        <li>Ricardo Darin</li>
+        <li>Luciana Aimar</li>
+        <li>Mafalda</li>
+        <li>Charly Garcia</li>
+        <li>Moni Argento</li>
+        <li>Pepe Argento</li>
+        <li>Marcelo Tinelli</li>
+        <li>Patoruzú</li>
+
+  </div>
+
+</div>
+
+<div class="vidas">
+  Vidas: {{ maxIntentos - intentos.length }}
+</div>

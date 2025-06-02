@@ -1,0 +1,57 @@
+<div class="juego-layout">
+
+  <div class="usuario-info">
+    <h3>👤 Usuario</h3>
+    <p><strong>Email:</strong><br> {{ emailUsuario }}</p>
+    <p class="record">🏆 Récord: {{ record }}</p>
+
+  </div>
+
+
+  <div class="juego-container">
+    <h1>Mayor o Menor</h1>
+
+    <div *ngIf="cartaActual" class="carta-container">
+      <h3>Carta actual</h3>
+      <img [src]="cartaActual.image" alt="Carta actual" class="carta-img" />
+    </div>
+
+    <div *ngIf="estadoJuego === 'perdiste'" class="mensaje derrota">
+      <h2>💀 ¡Perdiste!</h2>
+      <p class="mensaje">{{ mensaje }}</p>
+      <button class="reiniciar-btn" (click)="reiniciar()">🔄 Reiniciar</button>
+    </div>
+
+    <div *ngIf="estadoJuego === 'jugando'" class="acciones">
+      <p class="mensaje feedback">{{ mensaje }}</p>
+
+      <div class="botones">
+        <button style="background-color: rgb(31, 255, 180);" (click)="adivinar('mayor')" [disabled]="!puedeJugar">Mayor 🔼</button>
+        <button style="background-color: rgb(235, 32, 224);" (click)="adivinar('menor')" [disabled]="!puedeJugar">Menor 🔽</button>
+      </div>
+
+      <p class="contador">Progreso: {{ contador }}</p>
+    </div>
+  </div>
+
+  <div class="info-cartas">
+    <h3>📘 Valor de las cartas</h3>
+    <ul>
+      <li><strong>As</strong> = 14</li>
+      <li><strong>Rey (K)</strong> = 13</li>
+      <li><strong>Reina (Q)</strong> = 12</li>
+      <li><strong>Jota (J)</strong> = 11</li>
+      <li>10</li>
+      <li>9</li>
+      <li>8</li>
+      <li>7</li>
+      <li>6</li>
+      <li>5</li>
+      <li>4</li>
+      <li>3</li>
+      <li>2</li>
+    </ul>
+  </div>
+
+    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+</div>

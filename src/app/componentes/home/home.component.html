@@ -1,1 +1,27 @@
-<h1>Bienvenidos</h1>
+<div class="home-container">
+  <div class="titulo-container">
+    <h1>Bienvenido a la Sala de Juegos</h1>
+    <h2>{{ emailUsuario }}</h2>
+
+  </div>
+
+  
+  <app-chat [usuarioId]="usuarioId" [userMap]="userMap"></app-chat>
+
+
+  <div class="botones-grid">
+    <button routerLink="/juegos/preguntados" class="juego-btn juego-1">Preguntados
+    </button>
+    <button routerLink="/juegos/mayor-menor" class="juego-btn juego-3" >Mayor o Menor</button>
+    <button class="juego-btn juego-4" (click)="irASecuencia()">Juego propio</button>
+    <button class="juego-btn juego-2" (click)="irAAhorcado()">Ahorcado</button>
+  </div>
+
+  <button class="quien-soy-btn" (click)="irAQuienSoy()">Ir a Quién Soy</button>
+
+    <div class="salida"  >
+    <button (click)="cerrarSesion()">
+      <img src="/assets/salida.png" alt="salida" style="width: 70px; height: 70px;" />
+    </button>
+  </div>
+</div>
