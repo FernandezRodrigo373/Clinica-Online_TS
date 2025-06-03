@@ -100,6 +100,15 @@ export class HomeComponent implements OnInit{
     this.router.navigate(['/juegos/ahorcado']);
   }
 
+  irARanking() {
+    this.router.navigate(['/rankings']);
+  }
+
+  irAEncuestas() {
+    this.router.navigate(['/encuestas']);
+  }
+
+
   async cerrarSesion() {
      try {
       const supabase = this.supabaseService.getSupabaseClient(); 

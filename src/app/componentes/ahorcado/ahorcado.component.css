@@ -106,12 +106,6 @@
   color: #333333;
 }
 
-.letras {
-  margin-top: 20px;
-  font-size: 20px;
-  text-align: center;
-  color: #444444;
-}
 
 .mensaje {
   font-size: 28px;
@@ -190,11 +184,33 @@
 }
 
 
-.letras
-{
-  color: #a32d2d;
-  
+.letras {
+  margin: auto;
+
+  background-color: #f3f7ff;
+  border: 2px solid #a3c0e0;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  color: #1c1c1c;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+.fila-letras {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+
+.fila-letras div {
+  flex: 1 1 30%;
+  min-width: 180px;
+  margin: 5px;
+  text-align: center;
+}
+
 
 
 

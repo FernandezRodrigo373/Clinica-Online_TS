@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';  
+import { SupabaseService } from '../../services/supabase.service';
 
 interface PersonajeArgentino {
   nombre: string;
@@ -79,13 +80,35 @@ export class MijuegoComponent {
 
   mostrarLista: boolean = false;
 
-  constructor(private router: Router,)
+
+  usuarioId: number = 0;
+  emailUsuario: string = '';
+  mejorTiempo: number = 0;
+  mejorIntentos: number = 0;
+
+  juegoTerminado: boolean = false;
+  tiempoTranscurrido: number = 0; 
+  private intervalId: any = null;
+
+
+  constructor(private router: Router, private supabaseService: SupabaseService)
   {
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
+    const usuario = await this.supabaseService.obtenerUsuarioYId();
+    if (usuario) {
+      this.emailUsuario = usuario.email;
+      this.usuarioId = usuario.id;
+
+      const record = await this.supabaseService.obtenerRecordMijuego(this.usuarioId);
+      this.mejorTiempo = record.mejor_tiempo;
+      this.mejorIntentos = record.mejor_intentos;
+    }
     this.reiniciarJuego();
+
   }
 
   reiniciarJuego(): void 
@@ -94,8 +117,12 @@ export class MijuegoComponent {
     this.juegoFinalizado = false;
     this.mensajeFinal = '';
     this.personajeOculto = this.obtenerPersonajeOculto();
+    console.log(this.personajeOculto);
     this.nombreAdivinado = '';
     this.opcionesFiltradas = [];
+    this.detenerTimer();
+    this.tiempoTranscurrido = 0;
+    this.iniciarTimer();
   }
 
   obtenerPersonajeOculto(): PersonajeArgentino 
@@ -145,9 +172,15 @@ export class MijuegoComponent {
     {
       this.juegoFinalizado = true;
       this.mensajeFinal = '¡Adivinaste el personaje!';
+      this.juegoFinalizado = true
+      this.guardarRecord();  
+      this.detenerTimer();
+      
     } else if (this.intentos.length >= this.maxIntentos) {
       this.juegoFinalizado = true;
       this.mensajeFinal = `Perdiste. El personaje era: ${this.personajeOculto.nombre}`;
+      this.juegoFinalizado = true
+      this.detenerTimer();
     }
 
     this.nombreAdivinado = '';
@@ -239,6 +272,47 @@ export class MijuegoComponent {
   {
     return !this.mostrarLista;
   }
+
+  async guardarRecord() 
+  {
+    if (!this.usuarioId) return;
+
+    const tiempoActual = this.tiempoTranscurrido;  
+    const intentosActual = this.intentos.length;
+
+    if (
+      this.mejorTiempo === 0 || tiempoActual < this.mejorTiempo || 
+      this.mejorIntentos === 0 || intentosActual < this.mejorIntentos
+    ) {
+      try {
+        await this.supabaseService.actualizarRecordMijuego(this.usuarioId, tiempoActual, intentosActual);
+        this.mejorTiempo = tiempoActual;
+        this.mejorIntentos = intentosActual;
+      } catch (error) {
+        console.error('Error guardando record en Supabase:', error);
+      }
+    }
+  }
+
+  iniciarTimer(): void 
+  {
+    this.intervalId = setInterval(() => {
+      if (!this.juegoTerminado) {
+        this.tiempoTranscurrido++;
+      } else {
+        this.detenerTimer();
+      }
+    }, 1000);
+  }
+
+  detenerTimer(): void 
+  {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
 
 
 

@@ -1,0 +1,54 @@
+<div class="container">
+
+  <h1>Rankings de Juegos</h1>
+
+  <div class="rankings">
+    <div class="ranking-juegos">
+      <h2>Ahorcado</h2>
+      <div class="cards">
+        <div *ngFor="let r of ahorcadoRecords" class="card ahorcado">
+          <p><strong>Email:</strong> {{ r.usuario_email }}</p>
+          <p><strong>Intentos:</strong> {{ r.menos_intentos }}</p>
+          <p><strong>Tiempo:</strong> {{ r.menor_tiempo }}s</p>
+          <p><strong>Fecha: </strong>{{ r.fecha | date:'shortDate' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ranking-juegos">
+      <h2>Mayor o Menor</h2>
+      <div class="cards">
+        <div *ngFor="let r of mayorMenorRecords" class="card mayor-menor">
+          <p><strong>Email:</strong> {{ r.usuario_email }}</p>
+          <p><strong>Record:</strong> {{ r.record }}</p>
+          <p><strong>Fecha: </strong>{{ r.actualizado_en | date:'shortDate' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ranking-juegos">
+      <h2>Preguntados</h2>
+      <div class="cards">
+        <div *ngFor="let r of preguntadosRecords" class="card preguntados">
+          <p><strong>Email:</strong> {{ r.usuario_email }}</p>
+          <p><strong>Record:</strong> {{ r.record }}</p>
+          <p><strong>Fecha: </strong>{{ r.actualizado_en | date:'shortDate' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ranking-juegos">
+      <h2>Mi Juego</h2>
+      <div class="cards">
+        <div *ngFor="let r of mijuegoRecords" class="card mijuego">
+          <p><strong>Email:</strong> {{ r.usuario_email }}</p>
+          <p><strong>Intentos:</strong> {{ r.mejor_intentos }}</p>
+          <p><strong>Tiempo:</strong> {{ r.mejor_tiempo }}s</p>
+          <p><strong>Fecha: </strong>{{ r.fecha | date:'shortDate' }}</p>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

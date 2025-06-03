@@ -17,6 +17,8 @@ export const routes: Routes = [
     {path: 'quien-soy',loadComponent:() => import('./componentes/quien-soy/quien-soy.component').then(c => c.QuienSoyComponent)},
     {path: 'registro', loadComponent:() => import('./componentes/registro/registro.component').then(c => c.RegistroComponent)},
     {path: 'juegos', loadChildren:() => import('./juegos/juegos.module').then(m => m.JuegosModule)},
+    {path: 'encuestas',loadComponent:() => import('./componentes/encuestas/encuestas.component').then(c => c.EncuestasComponent)},
+    {path: 'rankings', loadComponent:() => import('./componentes/rankings/rankings.component').then(c => c.RankingsComponent)},
 
 
 
