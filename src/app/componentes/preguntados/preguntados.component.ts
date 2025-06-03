@@ -43,11 +43,29 @@ export class PreguntadosComponent implements OnInit {
   tiempoTranscurrido: number = 0; 
   private intervalId: any = null;
 
-  constructor(private simpsonsService: SimpsonsService, private router: Router,) {}
+
+  emailUsuario: string = '';
+  usuarioId: number = 0;
+  record: number = 0;
+
+  gifActual: string = 'assets/jugando.gif';  
+
+  vidasPrevias = this.vidas;
+  aciertosPrevios = this.contadorAciertos;
+
+  constructor(private simpsonsService: SimpsonsService, private router: Router,private supabaseService: SupabaseService) {}
 
 
-  ngOnInit(): void 
+  async ngOnInit(): Promise<void>
   {
+    const usuario = await this.supabaseService.obtenerUsuarioYId();
+
+      if (usuario) {
+        this.emailUsuario = usuario.email;
+        this.usuarioId = usuario.id;
+
+        this.record = await this.supabaseService.obtenerRecordPreguntados(this.usuarioId);
+      }
     this.cargarPregunta();
     this.iniciarTimer();
   }
@@ -92,6 +110,12 @@ export class PreguntadosComponent implements OnInit {
 
         if (personajesNoUsados.length === 0) 
         {
+          if (this.contadorAciertos > this.record && this.usuarioId)
+          {
+            this.record = this.contadorAciertos;
+            this.supabaseService.actualizarPreguntados(this.usuarioId, this.record);
+          }
+
           this.detenerTimer();
           this.mensaje = 'Ganaste. Llegaste al final del juego';
           this.cargando = false;
@@ -145,7 +169,7 @@ export class PreguntadosComponent implements OnInit {
   }
 
 
-  elegirOpcion(opcion: string): void 
+  async elegirOpcion(opcion: string): Promise<void> 
   {
     if (this.respondido)
     {
@@ -163,16 +187,34 @@ export class PreguntadosComponent implements OnInit {
        this.detenerTimer();
         this.juegoTerminado = true;
         this.mensaje = `Juego terminado. No te quedan vidas. La respuesta correcta era: ${this.personajeCorrecto}`;
-      } else {
+        if (this.contadorAciertos > this.record && this.usuarioId) 
+        {
+          this.record = this.contadorAciertos;
+          await this.supabaseService.actualizarPreguntados(this.usuarioId, this.record);
+        }
+        
+      } 
+      else {
         this.mensaje = `Incorrecto. Te quedan ${this.vidas} vidas. Respuesta correcta: ${this.personajeCorrecto}`;
+        if (this.contadorAciertos > this.record && this.usuarioId) 
+        {
+          this.record = this.contadorAciertos;
+          await this.supabaseService.actualizarPreguntados(this.usuarioId, this.record);
+        }
       }
     }
+
+
+    
+    this.actualizarGif();
 
     this.respondido = true;
   }
 
   siguientePregunta(): void 
   {
+     this.gifActual = '';
+      this.actualizarGif();
       if (this.juegoTerminado) 
       {
         return; 
@@ -196,14 +238,65 @@ export class PreguntadosComponent implements OnInit {
   }
 
   reiniciarJuego(): void {
+    this.gifActual = 'assets/jugando.gif';
     this.vidas = 3;
     this.contadorAciertos = 0;
     this.personajesUsados = [];
     this.juegoTerminado = false;
     this.cargarPregunta();
+    this.tiempoTranscurrido = 0;
     this.iniciarTimer();
   }
 
 
+
+  actualizarGif() 
+  {
+    const vidasBajaron = this.vidas < this.vidasPrevias;
+    const aciertosSubieron = this.contadorAciertos > this.aciertosPrevios;
+
+    if (vidasBajaron) 
+      {
+      if (this.vidas < 1) 
+        {
+        this.gifActual = 'assets/vidas1.gif';
+
+        console.log('Bajaron vidas a menos de 1, gif error vidas1.gif');
+
+      } 
+      else if (this.vidas < 2) 
+        {
+        this.gifActual = 'assets/vidas2.gif';
+
+        console.log('Bajaron vidas a menos de 2, gif error vidas2.gif');
+      } 
+      else 
+      {
+        this.gifActual = 'assets/vidas3.gif';
+
+        console.log('Bajaron vidas a menos de 3, gif error vidas3.gif');
+      }
+    } 
+    else if (aciertosSubieron) // Sólo entra acá si NO bajaron vidas, pero sí subieron aciertos
+    {
+      if (this.contadorAciertos < 10) {
+        this.gifActual = `assets/acierto${this.contadorAciertos}.gif`;
+
+        console.log(`Aciertos subieron y <10, gif acierto${this.contadorAciertos}.gif`);
+      } else {
+        this.gifActual = 'assets/aciertosmasdediez.gif';
+
+        console.log('Aciertos subieron y >=10, gif aciertosmasdediez.gif');
+      }
+    } else {
+      this.gifActual = 'assets/jugando.gif';
+
+      console.log('Default gif jugando.gif');
+    }
+
+    this.vidasPrevias = this.vidas;
+    this.aciertosPrevios = this.contadorAciertos;
+
+  }
 
 }

@@ -87,4 +87,39 @@ export class SupabaseService {
   }
 
 
+  async obtenerRecordPreguntados(usuarioId: number) 
+  {
+    const { data, error } = await this.supabase
+      .from('records_preguntados')
+      .select('record')
+      .eq('usuario_id', usuarioId)
+      .single();
+
+      if (data) {
+        return data.record;
+      } 
+      else if (error && error.code === 'PGRST116')
+      {
+        await this.supabase
+          .from('records_preguntados')
+          .insert({ usuario_id: usuarioId, record: 0 });
+
+        return 0;
+      } else {
+        throw error;
+      }
+  }
+
+  async actualizarPreguntados(usuarioId: number, nuevoRecord: number) 
+  {
+    return this.supabase
+      .from('records_preguntados')
+      .update({
+        record: nuevoRecord,
+        actualizado_en: new Date()
+      })
+      .eq('usuario_id', usuarioId);
+  }
+
+
 }
