@@ -46,7 +46,7 @@ ul {
 }
 
 .personaje-item:hover {
-  background-color: #e8f5e9; 
+  background-color: #e8f5e9;
   color: #2e7d32;
   font-weight: 600;
   border-radius: 0 0 8px 8px;
@@ -66,10 +66,11 @@ ul {
   flex-wrap: nowrap;
   width: 100%;
   box-sizing: border-box;
+  border: 1px solid #cccccc;
 }
 
 .intento > div {
-  flex: 1 1 0; 
+  flex: 1 1 0;
   font-size: 0.85rem;
   font-weight: 600;
   padding: 6px 8px;
@@ -89,7 +90,6 @@ ul {
   text-align: center;
 }
 
-
 .verde {
   background-color: #42b10e;
 }
@@ -104,10 +104,9 @@ ul {
   font-weight: 400;
 }
 
-
 .mensaje-final {
   text-align: center;
-  margin-top: 25px;
+  margin-top: 2rem;
 }
 
 .mensaje-final h3 {
@@ -127,26 +126,8 @@ ul {
   transition: background-color 0.3s ease;
 }
 
-.mensaje-final button:hover 
-{
+.mensaje-final button:hover {
   background-color: #388e3c;
-}
-
-.intento
- { 
-  margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #cccccc; 
-}
-.personaje-item
- {
-   cursor: pointer; 
-}
-.personaje-item:hover 
-{ 
-  background-color: #fbfcfb;
-}
-.mensaje-final 
-{
-   margin-top: 2rem; 
 }
 
 .boton-home {
@@ -165,18 +146,17 @@ ul {
   transition: background-color 0.3s ease;
 }
 
-
 .final {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .final-contenido {
@@ -231,7 +211,7 @@ ul {
   border: 3px solid #424242;
 }
 
-.vidas{
+.vidas {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -245,7 +225,6 @@ ul {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
-
 
 .boton-lateral {
   position: fixed;
@@ -294,7 +273,6 @@ ul {
   margin-bottom: 5px;
 }
 
-
 .container {
   display: flex;
   gap: 20px;
@@ -313,22 +291,19 @@ ul {
   overflow-y: auto;
 }
 
-
 .izquierda {
-  flex: 0 0 200px; 
+  flex: 0 0 200px;
   background-color: #28a79c;
   color: white;
   font-weight: bold;
 }
 
-
 .centro {
-  flex: 1; 
+  flex: 1;
   background-color: white;
   max-height: 80vh;
   overflow-y: auto;
 }
-
 
 .derecha {
   flex: 0 0 320px;
@@ -339,23 +314,19 @@ ul {
   position: relative;
   text-align: center;
   font-size: 1.2rem;
-
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
-
-
 }
 
-
-.derecha h2, .derecha h3 {
+.derecha h2,
+.derecha h3 {
   font-weight: 700;
   margin-bottom: 1rem;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
-
 
 .derecha ul {
   list-style: none;
@@ -370,29 +341,22 @@ ul {
   line-height: 1.4;
 }
 
-
 .titulo {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 3rem;
-  color: #28a79c;  
+  color: #28a79c;
   margin-top: 15px;
   margin-bottom: 10px;
   font-weight: 700;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
-.sub-titulo{
+.sub-titulo {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.7rem;
-  color: #494949;  
-
+  color: #494949;
   font-weight: 500;
   letter-spacing: 0.05em;
 }
-
-
-
-
-
