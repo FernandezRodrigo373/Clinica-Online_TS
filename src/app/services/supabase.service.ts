@@ -7,6 +7,22 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 const SUPABASE_URL = 'https://jnjiqdpddhjrroqpmbfi.supabase.co'; 
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpuamlxZHBkZGhqcnJvcXBtYmZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUwMDExMjAsImV4cCI6MjA2MDU3NzEyMH0.1R79yrQTXPJtT2F0eLPCEQXY4PwwbGyzp4lF8xM9bBU'; // Tu clave de API
 
+
+export interface Encuesta {
+  usuario_id: number;
+  nombre: string;
+  apellido: string;
+  edad: number;
+  telefono: string;
+  pregunta1: string;
+  respuesta1: string;
+  pregunta2: string;
+  respuesta2: string;
+  pregunta3: string;
+  respuesta3: string;
+  fecha_creacion: Date;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -394,7 +410,16 @@ async obtenerTopMayorMenor()
   }
 
 
+  async insertarEncuesta(datosEncuesta: Encuesta): Promise<{ error: any }> {
+    const { error } = await this.supabase
+      .from('encuestas')
+      .insert(datosEncuesta);
 
-
-
+    return { error };
+  }
 }
+
+
+
+
+

@@ -77,6 +77,8 @@ h1 {
 }
 
 
+
+
 .card.ahorcado {
   border-left: 6px solid #00d3be;
 }
@@ -105,3 +107,26 @@ h1 {
   color: #222222;
     font-size: 1.2rem;
 }
+
+
+.boton-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  width: 140px;
+}
+
+.boton-home:hover {
+  background-color: #218838;
+}
+

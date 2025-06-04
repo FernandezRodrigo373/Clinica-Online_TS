@@ -1,1 +1,60 @@
-<p>encuestas works!</p>
+<h2 style="text-align: center; margin-top: 25px; font-size: 1.5rem">Gracias por completar la encuesta</h2>
+<div *ngIf="mensaje" [ngClass]="{'mensaje-error': mensaje.tipo === 'error', 'mensaje-exito': mensaje.tipo === 'exito'}" class="mensaje">
+  {{ mensaje.texto }}
+</div>
+
+
+<form [formGroup]="encuestaForm" (ngSubmit)="enviarEncuesta()">
+
+    <p style="font-size: 1.2rem; margin-bottom: 15px; text-align: center;"><strong>Datos personales</strong></p>
+  <div class="datos-personales">
+
+    <div class="columna-izquierda">
+      <label>
+        Nombre:
+        <input type="text" formControlName="nombre" />
+      </label>
+
+      <label>
+        Apellido:
+        <input type="text" formControlName="apellido" />
+      </label>
+    </div>
+
+    <div class="columna-derecha">
+      <label>
+        Edad:  
+        <br> 
+        <input type="number" formControlName="edad" />
+      </label>
+
+      <label>
+        Teléfono:
+        <input type="text" formControlName="telefono" />
+      </label>
+    </div>
+  </div>
+
+  <p style="font-size: 1.2rem; margin-top: 35px; margin-bottom: 15px;"><strong>¿Qué juego te gustó más?</strong></p>
+  <div class="pregunta-juegos">
+    <label><input type="radio" formControlName="juego" value="preguntados" /> Preguntados</label>
+    <label><input type="radio" formControlName="juego" value="ahorcado" /> Ahorcado</label>
+    <label><input type="radio" formControlName="juego" value="mayor-menor" /> Mayor-Menor</label>
+    <label><input type="radio" formControlName="juego" value="adivina" /> Adiviná al Argentino</label>
+  </div>
+
+  <p style="font-size: 1.2rem; margin-top: 55px; margin-bottom: 15px;"><strong>¿Qué dispositivos usaste para jugar?</strong></p>
+  <div formGroupName="dispositivos" class="dispositivos">
+    <label><input type="checkbox" formControlName="pc" /> PC</label>
+    <label><input type="checkbox" formControlName="celular" /> Celular</label>
+    <label><input type="checkbox" formControlName="tablet" /> Tablet</label>
+  </div>
+
+  <label>
+    <p style="font-size: 1.2rem; margin-top: 55px;"><strong>¿Qué mejorarias de la pagina?</strong></p><br />
+    <textarea formControlName="sugerencia"></textarea>
+  </label>
+
+  <button style="margin-top: 35px;" type="submit">Enviar</button>
+</form>
+<button class="boton-home" (click)="irAlMenu()">Volver al menu</button>

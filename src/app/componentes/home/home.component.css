@@ -78,6 +78,7 @@ h2 {
   border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-right: 10px;
 }
 
 .quien-soy-btn:hover {

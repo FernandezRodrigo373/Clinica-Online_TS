@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
+import { Route, Router } from '@angular/router';
 
 interface RecordAhorcado {
   id: number;
@@ -49,7 +50,7 @@ export class RankingsComponent {
   preguntadosRecords: RecordPreguntados[] = [];
   mijuegoRecords: RecordMiJuego[] = [];
 
-  constructor(private supabaseService: SupabaseService) { }
+  constructor(private router: Router,private supabaseService: SupabaseService) { }
 
   async ngOnInit() {
     await this.cargarRankings();
@@ -61,6 +62,11 @@ export class RankingsComponent {
     this.mayorMenorRecords = await this.supabaseService.obtenerTopMayorMenor();
     this.preguntadosRecords = await this.supabaseService.obtenerTopPreguntados();
     this.mijuegoRecords = await this.supabaseService.obtenerTopMiJuego();
+  }
+
+    irAlMenu() 
+  {
+    this.router.navigate(['/home']);
   }
 
 }
