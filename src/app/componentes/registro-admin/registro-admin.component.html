@@ -1,0 +1,110 @@
+<div class="registro-container">
+  <h2>Registro de Usuario</h2>
+
+  <form [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
+
+
+    <div class="form-columns">
+
+      <div class="form-column">
+        <label for="correo">Correo:</label>
+        <input id="correo" type="email" formControlName="email">
+
+        <label for="contrasena">Contraseña:</label>
+        <input id="contrasena" type="password" formControlName="contrasena" required>
+
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" type="text" formControlName="nombre" required>
+      </div>
+
+
+      <div class="form-column">
+        <label for="apellido">Apellido:</label>
+        <input id="apellido" type="text" formControlName="apellido" required>
+
+        <label for="edad">Edad:</label>
+        <input id="edad" type="number" formControlName="edad" required>
+
+        <label for="dni">DNI:</label>
+        <input id="dni" type="text" formControlName="dni" required>
+      </div>
+    </div>
+
+
+    <div class="form-row full-width">
+      <label for="tipo">Tipo de usuario:</label>
+      <select id="tipo" formControlName="tipo">
+        <option value="" disabled selected>Seleccionar</option>
+        <option value="paciente">Paciente</option>
+        <option value="especialista">Especialista</option>
+        <option value="administrador">Administrador</option>
+
+      </select>
+    </div>
+
+    <!-- Solo para pacientes -->
+    <div *ngIf="formularioRegistro.get('tipo')?.value === 'paciente'" class="form-row full-width">
+      <label for="obraSocial">Obra Social:</label>
+      <select id="obraSocial" formControlName="obraSocial">
+        <option value="" disabled selected>Seleccionar obra social</option>
+        <option *ngFor="let os of obrasSocialesDisponibles" [value]="os">{{ os }}</option>
+      </select>
+
+      <div *ngIf="mostrarOtraObraSocial">
+        <label for="otraObraSocial">Otra obra social:</label>
+        <input id="otraObraSocial" type="text" formControlName="otraObraSocial" placeholder="Escriba la obra social">
+      </div>
+
+      <label for="imagen1">Foto de perfil:</label>
+      <input type="file" (change)="cambioDeImagen($event, 1)" accept="image/*">
+
+      <label for="imagen2">Foto adicional:</label>
+      <input type="file" (change)="cambioDeImagen($event, 2)" accept="image/*">
+    </div>
+
+   <!-- specialistas -->
+<div *ngIf="formularioRegistro.get('tipo')?.value === 'especialista'" class="form-row full-width">
+  <label>Especialidades:</label>
+  
+  <div class="especialidades-container">
+    <select [(ngModel)]="nuevaEspecialidad" [ngModelOptions]="{standalone: true}">
+      <option value="" disabled selected>Seleccionar especialidad</option>
+      <option *ngFor="let esp of especialidadesDisponibles" [value]="esp">{{ esp }}</option>
+      <option value="Otra">Otra especialidad...</option>
+    </select>
+    
+    <button type="button" (click)="agregarEspecialidad()">Agregar</button>
+    
+    <div *ngIf="mostrarOtraEspecialidadInput" class="otra-especialidad">
+      <input type="text" [(ngModel)]="otraEspecialidadTemporal" 
+             [ngModelOptions]="{standalone: true}" placeholder="Escriba la especialidad">
+      <button type="button" (click)="agregarEspecialidadManual()">Agregar</button>
+    </div>
+    </div>
+    
+    <div class="especialidades-list">
+      <div *ngFor="let esp of especialidadesAgregadas" class="especialidad-item">
+        {{ esp }}
+        <button type="button" (click)="eliminarEspecialidad(esp)">×</button>
+      </div>
+    </div>
+    
+    <label for="imagen1">Foto de perfil:</label>
+    <input type="file" (change)="cambioDeImagen($event, 1)" accept="image/*">
+  </div>
+
+<!-- administradores --> 
+ <div *ngIf="formularioRegistro.get('tipo')?.value === 'administrador'" class="form-row full-width"> <label for="imagen1">Foto de perfil (Administrador):</label> <input type="file" (change)="cambioDeImagen($event, 1)" accept="image/*"> </div>
+
+    <div class="form-buttons full-width">
+        <button type="submit">Registrarse</button>
+    </div>
+
+
+    <div *ngIf="mensaje" [ngClass]="mensaje.tipo" class="mensaje full-width">
+      {{ mensaje.texto }}
+    </div>
+  </form>
+  
+</div>
+<button class="boton-home" (click)="irAlMenu()">Volver al menu</button>

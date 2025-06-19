@@ -1,0 +1,194 @@
+.contenedor-turnos {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.filtro-input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.tarjeta-turno {
+  background-color: #f8f9fa;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.tarjeta-turno:hover {
+  transform: scale(1.01);
+}
+
+.tarjeta-turno h3 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.tarjeta-turno p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.estado {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #17a2b8;
+}
+
+.acciones {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.acciones button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.acciones button:hover {
+  background-color: #0056b3;
+}
+
+.acciones button:nth-child(2) {
+  background-color: #28a745;
+}
+
+.acciones button:nth-child(2):hover {
+  background-color: #1e7e34;
+}
+
+.acciones button:nth-child(3) {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.acciones button:nth-child(3):hover {
+  background-color: #e0a800;
+}
+
+.acciones button:nth-child(4),
+.acciones button:nth-child(5) {
+  background-color: #dc3545;
+}
+
+.acciones button:nth-child(4):hover,
+.acciones button:nth-child(5):hover {
+  background-color: #b02a37;
+}
+
+
+
+.filtros {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filtro-input {
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.tarjeta-turno {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+}
+
+.estado {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal textarea {
+  width: 100%;
+  resize: none;
+  margin-top: 10px;
+  padding: 8px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.boton-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.boton-home:hover {
+  background-color: #218838;
+}
+
+

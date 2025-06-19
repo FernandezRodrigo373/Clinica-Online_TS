@@ -1,7 +1,7 @@
 .home-container {
   text-align: center;
   padding: 60px;
-  background: linear-gradient(to bottom, #0f2027, #0e1c20, #00d3be);
+  background: linear-gradient(to bottom, #ffffff, #c4fff9, #00d3be);
   color: white;
   height: 100vh;
   min-height: 100vh;
@@ -13,14 +13,44 @@
 
 
 
+.secundarios
+{
+  padding: 30px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  color: #00d3be;
+  width: 100%;
+  height: 100px;
+  background-color: #0f1842;
+  width: 50%;
+  font-size: 1.5rem;
+}
+
+
+.botones{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+
+  
+}
 
 h1 {
   font-size: 3rem;
+  color: #0f1842;
 }
 
 h2 {
   font-size: 1.5rem;
   margin-bottom: 65px;
+  color: #0f1842;
+
 }
 
 .botones-grid {
@@ -29,6 +59,7 @@ h2 {
   gap: 30px;
   max-width: 600px;
   margin: 0 auto 50px;
+  background-color: #0f1842;
 }
 
 .juego-btn {
@@ -39,7 +70,7 @@ h2 {
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-  color: white;
+  color: #0f1842;
   width: 100%;
   height: 100px;
 }
@@ -87,13 +118,11 @@ h2 {
 
 .salida
 {
-
-  margin-top: 13.5%;
+  margin-top: 100px;
   width: 50%;
-
   margin-left: 65%;
   z-index: 4;
-  margin-bottom: 10%;
+  margin-bottom: 20%;
 }
 
 .juego-layout {

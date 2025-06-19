@@ -3,38 +3,43 @@
       {{ mensaje.texto }}
     </div>
 
-  <div class="login-overlay">
+  <div  class="login-overlay">
+
+    <div class="autocompletar">
+      <img src="/assets/lebron.jpg" (click)="autocompletar('pruebaclinicapaciente@gmail.com')" alt="Paciente">
+      <img src="/assets/nena.jpg" (click)="autocompletar('sofia@lomonaco.com')" alt="Paciente">
+      <img src="/assets/hoombre40.jpg" (click)="autocompletar('pedro@lopez.com')" alt="Paciente">
+      <img src="/assets/anciana.png" (click)="autocompletar('mirtha@martinez.com')" alt="Especialista">
+      <img src="/assets/marcos.jpg" (click)="autocompletar('pruebaclinicaespecialista@gmail.com')" alt="Especialista">
+      <img src="/assets/rodrigo.avif" (click)="autocompletar('rodrigo123@fernandez.com')" alt="Administrador">
+    </div>
+  
 
    <div class="inicio">
      <h2>Inicio de sesión</h2>
-     <img src="/assets/logopage.png" alt="Imagen de inicio" class="login-image" />
+     <img src="/assets/clinica2.png" alt="Imagen de inicio" class="login-image" />
      
     </div>
 
  
     <form [formGroup]="formularioLogin" (ngSubmit)="ingresar()">
-      <div class="form-item">
+      <div style="margin-left: 230px;" class="form-item">
 
         <label for="correo">Correo Electrónico</label>
         <input id="correo" formControlName="correo" type="email" placeholder="Introduce tu correo" />
       </div>
   
-      <div class="form-item">
+      <div style="margin-left: 230px;" class="form-item">
         <label for="contrasena">Contraseña</label>
         <input id="contrasena" formControlName="contrasena" type="password" placeholder="Introduce tu contraseña" />
       </div>
   
-      <button type="submit" class="submit-btn">Ingresar</button>
+      <button style="margin-left: 280px;" type="submit" class="submit-btn">Ingresar</button>
     </form>
-  
-    <div class="autocompletar">
-      <button type="button" (click)="autocompletar('rodrigo@fernandez.com')">Usuario 1</button>
-      <button type="button" (click)="autocompletar('camila@iarussi.com')">Usuario 2</button>
-      <button type="button" (click)="autocompletar('leo@messi.com')">Usuario 3</button>
-    </div>
+
 
     <div class="registro-link">
-      <span>¿No tienes cuenta?</span>
+      <span>¿No tenes cuenta?</span>
       <button type="button" (click)="irARegistro()">Regístrate</button>
     </div>
     </div>

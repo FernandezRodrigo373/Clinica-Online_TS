@@ -1,0 +1,100 @@
+.especialista-card {
+  border: 1px solid #585151;
+  background-color: rgba(118, 211, 228, 0.911); 
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(0, 0, 0);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  width: 50%;
+  margin-top: 50px;
+  margin-left: 15px; 
+  justify-content: center;
+  align-items: center;
+}
+
+.contenedor-usuarios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh; 
+}
+
+.especialista-card:hover {
+  background-color: rgba(11, 226, 208, 0.788);
+}
+
+h1 {
+  font-size: 3rem;
+  color: #0f1842;
+  text-align: center;
+  margin: 50px;
+}
+
+.especialista-info {
+  font-weight: 600;
+  font-size: 1.1rem;
+  flex-grow: 1;
+  height: 100px;
+  margin-top: 5px;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
+button.aprobar-btn {
+  color: white;
+  border: none;
+
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 5px;
+  height: 50px;
+
+  min-width: 100px;
+}
+
+button.aprobar-btn.aprobado {
+  background-color: #d32f2f; 
+}
+
+button.aprobar-btn.no-aprobado {
+  background-color: #40a137; 
+}
+
+button.aprobar-btn:hover.aprobado {
+  background-color: #b71c1c;
+}
+
+button.aprobar-btn:hover.no-aprobado {
+  background-color: #378530;
+}
+
+.boton-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  width: 140px;
+}
+
+.boton-home:hover {
+  background-color: #218838;
+}
+
+

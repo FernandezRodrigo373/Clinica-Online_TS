@@ -1,0 +1,23 @@
+<div class="contenedor-usuarios">
+    <h1>Lista de especialistas</h1>
+    <div *ngFor="let esp of especialistas" class="especialista-card">
+        <div class="especialista-info">
+            <p><strong>Nombre:</strong> {{ esp.nombre }} {{ esp.apellido }}</p>
+            <p><strong>Especialidad:</strong> {{ esp.especialidades }}</p>
+            <p><strong>Edad:</strong> {{ esp.edad }}</p>
+            <p><strong>DNI:</strong> {{ esp.dni }}</p>
+            <p><strong>Email:</strong> {{ esp.email }}</p>
+
+            <p><strong>Verificado:</strong> {{ esp.verificado }}</p>  
+        </div>
+        
+        <button
+            (click)="actualizarBotonAprobacion(esp)"
+            [ngClass]="{'aprobar-btn': true, 'aprobado': esp.aprobado, 'no-aprobado': !esp.aprobado}"
+        >
+            {{ esp.aprobado ? 'Desaprobar' : 'Aprobar' }}
+        </button>
+    </div>
+</div>
+
+    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>

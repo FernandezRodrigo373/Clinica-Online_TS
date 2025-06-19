@@ -19,10 +19,14 @@
 
 }
 
+
 .inicio
 {
-    display: flex;
-    gap: 80px;
+  display: flex;
+  gap: 80px;
+  align-items: center;
+  justify-content: center;
+
 
 }
 
@@ -41,7 +45,9 @@ h2 {
 .form-item {
   margin-bottom: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  align-items: center;
+  justify-content: center;
 }
 
 label {
@@ -68,13 +74,15 @@ input::placeholder {
 .submit-btn {
   margin-top: 10px;
   background-color: #00d3be;
-  color: #000;
+  color: #000000;
   border: none;
   padding: 12px;
   border-radius: 25px;
   font-size: 1.1rem;
   cursor: pointer;
   transition: 0.3s ease;
+  width: 400px;
+  align-items: center;
 }
 
 .submit-btn:hover {
@@ -84,18 +92,41 @@ input::placeholder {
 .autocompletar {
   margin-top: 30px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
   width: 100%;
   max-width: 400px;
 }
 
 .autocompletar button {
-  background-color: #333;
+  background-color: #333333;
   color: white;
   border: 1px solid #00d3be;
   border-radius: 20px;
   padding: 10px;
+}
+
+.foto-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+
+.autocompletar img {
+  min-width: 160px;
+  height: 100px;
+  object-fit: cover;
+  border: 2px solid #0071b2;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.autocompletar img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .autocompletar button:hover {
@@ -131,7 +162,9 @@ input::placeholder {
   padding: 40px;
   border-radius: 16px;
   width: 100%;
-  max-width: 500px;
+  max-width: 1030px;
+
+  align-items: center;
 }
 
 

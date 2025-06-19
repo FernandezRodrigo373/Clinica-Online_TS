@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "labo4-19499"
-  }
+    "default": "labo4parcial2",
+    "labo4parcial2": "labo4parcial2"
+  },
+  "targets": {},
+  "etags": {}
 }

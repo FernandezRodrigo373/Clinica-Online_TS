@@ -26,45 +26,115 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
+  async ngOnInit() 
+  {
     const supabase = this.supabaseService.getSupabaseClient();
   }
 
-   mostrarMensaje(tipo: string, texto: string) {
-    this.mensaje = { tipo, texto };
+   mostrarMensaje(tipo: string, texto: string) 
+   {
+      this.mensaje = { tipo, texto };
 
-    setTimeout(() => {
-      this.mensaje = null;
-    }, 3000); 
-  }
+      setTimeout(() => {
+        this.mensaje = null;
+      }, 3000); 
+    }
   
 
-  async ingresar() 
-  {
+   async ingresar() 
+   {
     const correo = this.formularioLogin.get('correo')?.value;
     const contrasena = this.formularioLogin.get('contrasena')?.value;
 
     if (!correo || !contrasena) {
-      console.log('Por favor, completa ambos campos.');
       this.mostrarMensaje('error', 'Por favor, completa ambos campos.');
       return;
     }
 
     try {
-      const { data, error } = await this.supabaseService
-        .getSupabaseClient()
-        .auth.signInWithPassword({ email: correo, password: contrasena });
-      if (error) {
-        throw new Error(error.message);
-      }
-      console.log('Inicio de sesión exitoso:', data);
-      this.router.navigate(['/home']);
-    } catch (error) {
-      this.mostrarMensaje('error', 'Error en el inicio de sesión. Revise sus datos');
+      const supabase = this.supabaseService.getSupabaseClient();
 
+      const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+        email: correo,
+        password: contrasena
+      });
+
+      if (loginError || !loginData?.user) {
+        throw new Error(loginError?.message || 'Credenciales inválidas.');
+      }
+
+      const user = loginData.user;
+      console.log('Inicio de sesión exitoso:', user);
+
+      const { data: usuarioData, error: usuarioError } = await supabase
+        .from('usuarios')
+        .select('tipo, verificado, aprobado')
+        .eq('auth_uid', user.id)
+        .single();
+
+      if (usuarioError || !usuarioData) {
+        throw new Error('No se pudieron obtener los datos del usuario.');
+      }
+
+      if (!usuarioData.verificado && user.email_confirmed_at) {
+        const { error: updateError } = await supabase
+          .from('usuarios')
+          .update({ verificado: true })
+          .eq('auth_uid', user.id);
+
+        if (!updateError) {
+          usuarioData.verificado = true; 
+        } else {
+          console.warn('No se pudo actualizar el campo "verificado".', updateError);
+        }
+      }
+
+
+      if (usuarioData.tipo === 'administrador') {
+
+        this.router.navigate(['/home']);
+        return;
+      }
+
+      if (usuarioData.tipo === 'paciente') 
+      {
+        if (usuarioData.verificado) 
+        {
+          this.router.navigate(['/home']);
+        } 
+        else 
+        {
+          this.mostrarMensaje('error', 'Debe verificar su email para ingresar.');
+        }
+      } 
+      else if (usuarioData.tipo === 'especialista')
+      {
+        if (usuarioData.verificado && usuarioData.aprobado) 
+        {
+          this.router.navigate(['/home']);
+        } 
+        else 
+        {
+          this.mostrarMensaje('error', 'Debe verificar su email y ser aprobado por el admin.');
+        }
+      } 
+      else 
+      {
+        this.mostrarMensaje('error', 'Tipo de usuario no reconocido.');
+      }
+
+    } catch (error: any) {
       console.error('Error en el inicio de sesión:', error);
+
+      const msg = typeof error === 'string' ? error : error.message || 'Error desconocido';
+      if (msg.toLowerCase().includes('email not confirmed')) {
+        this.mostrarMensaje('error', 'Debe confirmar su cuenta. Revise su correo electrónico.');
+      } else {
+        this.mostrarMensaje('error', 'Error en el inicio de sesión. Revise sus datos.');
+      }
     }
   }
+
 
   autocompletar(usuario: string)
   {

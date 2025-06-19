@@ -1,33 +1,137 @@
-<div class="registro-container">
-  <div class="registro-overlay">
-
-    <div class="inicio">
-      <h2>Registro</h2>
-      <img src="/assets/logopage.png" alt="Imagen de registro" class="registro-image" />
+<div *ngIf="ocultarImagenes == false" class="botones">
+  <div class="autocompletar">
+    <h1>Seleccione el usuario </h1>
+    <div class="imagenes">
+      <img src="/assets/paciente.png" (click)="mostrarUsuario('paciente')" alt="Paciente">
+      <img src="/assets/doctor.png" (click)="mostrarUsuario('especialista')" alt="Especialista">
     </div>
+    <button type="button" (click)="irALogin()">Volver al Login</button>
 
-   
-    <div *ngIf="mensaje" [ngClass]="mensaje.tipo" class="mensaje">
-      {{ mensaje.texto }}
-    </div>
-
-    <form [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
-      <div class="form-item">
-        <label for="correo">Correo Electrónico</label>
-        <input id="correo" formControlName="correo" type="email" placeholder="Introduce tu correo" />
-      </div>
-
-      <div class="form-item">
-        <label for="contrasena">Contraseña</label>
-        <input id="contrasena" formControlName="contrasena" type="password" placeholder="Introduce tu contraseña" />
-      </div>
-
-      <button type="submit" class="submit-btn">Registrarse</button>
-    </form>
-
-    <div class="registro-link">
-      <span>¿Ya tienes cuenta?</span>
-      <button type="button" (click)="irALogin()">Loguearse</button>
-    </div>
   </div>
 </div>
+  <div *ngIf="esPaciente == true || esEspecialista == true" class="botones">
+    <div class="registro-container">
+      <h2>Registro de Usuario</h2>
+          <form [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
+
+
+            <div class="form-columns">
+
+              <div class="form-column">
+                <label for="correo">Correo:</label>
+                <input id="correo" type="email" formControlName="email">
+
+                <label for="contrasena">Contraseña:</label>
+                <input id="contrasena" type="password" formControlName="contrasena" required>
+
+                <label for="nombre">Nombre:</label>
+                <input id="nombre" type="text" formControlName="nombre" required>
+              </div>
+
+
+              <div class="form-column">
+                <label for="apellido">Apellido:</label>
+                <input id="apellido" type="text" formControlName="apellido" required>
+
+                <label for="edad">Edad:</label>
+                <input id="edad" type="number" formControlName="edad" required>
+
+                <label for="dni">DNI:</label>
+                <input id="dni" type="text" formControlName="dni" required>
+              </div>
+            </div>
+
+
+            <div class="form-row full-width">
+              <label for="tipo">Tipo de usuario:</label>
+              <input style="color: white;"
+                type="text"
+                id="tipo"
+                [value]="esPaciente ? 'paciente' : esEspecialista ? 'especialista' : ''"
+                formControlName="tipo"
+                readonly
+                *ngIf="esPaciente || esEspecialista"
+              >
+              <select id="tipo" formControlName="tipo" *ngIf="!esPaciente && !esEspecialista">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="paciente">Paciente</option>
+                <option value="especialista">Especialista</option>
+              </select>
+            </div>
+
+            <!-- Solo para pacientes -->
+            <div *ngIf="formularioRegistro.get('tipo')?.value === 'paciente'" class="form-row full-width">
+              <label for="obraSocial">Obra Social:</label>
+              <select id="obraSocial" formControlName="obraSocial">
+                <option value="" disabled selected>Seleccionar obra social</option>
+                <option *ngFor="let os of obrasSocialesDisponibles" [value]="os">{{ os }}</option>
+              </select>
+
+              <div *ngIf="mostrarOtraObraSocial">
+                <label for="otraObraSocial">Otra obra social:</label>
+                <input id="otraObraSocial" type="text" formControlName="otraObraSocial" placeholder="Escriba la obra social">
+              </div>
+
+              <label for="imagen1">Foto de perfil:</label>
+              <input type="file" (change)="cambioDeImagen($event, 1)" accept="image/*">
+
+              <label for="imagen2">Foto adicional:</label>
+              <input type="file" (change)="cambioDeImagen($event, 2)" accept="image/*">
+            </div>
+
+          <!-- especialistas -->
+        <div *ngIf="formularioRegistro.get('tipo')?.value === 'especialista'" class="form-row full-width">
+          <label>Especialidades:</label>
+          
+          <div class="especialidades-container">
+            <select [(ngModel)]="nuevaEspecialidad" [ngModelOptions]="{standalone: true}">
+              <option value="" disabled selected>Seleccionar especialidad</option>
+              <option *ngFor="let esp of especialidadesDisponibles" [value]="esp">{{ esp }}</option>
+              <option value="Otra">Otra especialidad...</option>
+            </select>
+            
+            <button type="button" (click)="agregarEspecialidad()">Agregar</button>
+            
+            <div *ngIf="mostrarOtraEspecialidadInput" class="otra-especialidad">
+              <input type="text" [(ngModel)]="otraEspecialidadTemporal" 
+                    [ngModelOptions]="{standalone: true}" placeholder="Escriba la especialidad">
+              <button type="button" (click)="agregarEspecialidadManual()">Agregar</button>
+            </div>
+            </div>
+            
+      <div class="especialidades-list">
+              <div *ngFor="let esp of especialidadesAgregadas" class="especialidad-item">
+                {{ esp }}
+                <button type="button" (click)="eliminarEspecialidad(esp)">×</button>
+              </div>
+            </div>
+            
+            <label for="imagen1">Foto de perfil:</label>
+            <input type="file" (change)="cambioDeImagen($event, 1)" accept="image/*">
+          </div>
+
+            <div class="captcha-container">
+            <re-captcha 
+              [siteKey]="SITE_KEY"
+              (resolved)="verificarCaptcha($event)"
+              (error)="verificarCaptchaError($event)"
+              (expired)="verificarCaptchaExpirado()">
+            </re-captcha>
+            <small *ngIf="captchaError" class="error-message">Por favor, completa el CAPTCHA</small>
+          </div>
+
+
+            <div class="form-buttons full-width">
+                <button type="submit" [disabled]="!captchaResolved">Registrarse</button>
+              <button type="button" (click)="irALogin()">Volver al Login</button>
+            </div>
+
+            <div *ngIf="mensaje" [ngClass]="mensaje.tipo" class="mensaje full-width">
+              {{ mensaje.texto }}
+            </div>
+          </form>
+
+          <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+          
+        </div>
+      </div>

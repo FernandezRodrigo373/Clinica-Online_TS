@@ -1,0 +1,45 @@
+<div class="contenedor-turnos">
+  <h1>Mis Turnos</h1>
+  <div class="filtros">
+    <input
+      type="text"
+      placeholder="Filtrar por especialidad"
+      [(ngModel)]="filtroEspecialidad"
+      (input)="aplicarFiltro()"
+      class="filtro-input"
+    />
+
+    <input
+      type="text"
+      [placeholder]="'Filtrar por ' + (usuarioTipo === 'administrador' ? 'especialista' : 'paciente')"
+      [(ngModel)]="filtroNombre"
+      (input)="aplicarFiltro()"
+      class="filtro-input"
+    />
+  </div>
+    <div *ngFor="let turno of turnosFiltrados" class="tarjeta-turno">
+        <h3>{{ turno.especialidad }}</h3>
+
+        <strong>Especialista:</strong> {{ turno.especialista?.nombre }} {{ turno.especialista?.apellido }}
+        <p><strong>Fecha:</strong> {{ turno.fecha | date: 'short' }}</p>
+        <p><strong>Estado:</strong> <span class="estado">{{ turno.estado }}</span></p>
+
+        <div class="acciones">
+            <button *ngIf="puedeCancelarPaciente(turno)" (click)="mostrarCancelacionPaciente(turno)">Cancelar turno</button>
+        </div>
+
+    </div>
+    
+    <div class="modal-overlay" *ngIf="motivoCancelacionVisible">
+        <div class="modal">
+            <h2>Motivo de cancelación</h2>
+            <textarea [(ngModel)]="motivoCancelacionTexto" placeholder="Ingrese el motivo..." rows="4"></textarea>
+            <div class="modal-buttons">
+            <button (click)="confirmarCancelacionPaciente()">Confirmar</button>
+            <button (click)="cancelarCancelacionPaciente()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+
+</div>

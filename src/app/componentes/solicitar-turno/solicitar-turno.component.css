@@ -1,0 +1,193 @@
+.solicitar-turno {
+  height: 100vh;
+  background-color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.seccion-titulo {
+  width: 100%;
+  text-align: center;
+  padding-top: 35px;
+  margin-bottom: 50px;
+}
+
+.seccion-titulo h1 {
+  font-size: 2.4rem;
+  color: #0071b2;
+  font-weight: bold;
+}
+
+
+.perfil-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+
+  flex-wrap: wrap;
+  min-height: 60vh;
+  background-color: #1459db;
+  padding-top: 60px;
+}
+
+.horarios-box {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 480px;
+  font-size: 1.05rem;
+  min-height: 430px;
+  margin-bottom: 25px;
+}
+
+.horarios-box h2 {
+  color: #0071b2;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.info-box {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  font-size: 1.1rem;
+  min-height: 430px;
+}
+
+.info-box h2 {
+  color: #0071b2;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #383838;
+}
+
+
+select, input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1.05rem;
+  border: 2px solid #0071b2;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  appearance: none;
+  
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+}
+
+button[type="submit"] {
+  margin-top: 30px;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: #0071b2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #005c93;
+}
+
+button[type="submit"]:disabled {
+  background-color: #a0c8e0;
+  cursor: not-allowed;
+}
+
+.foto-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.foto-container img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #0071b2;
+}
+
+.especialidades-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.especialidades-list li {
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background-color: #e6f2fa;
+  border-radius: 6px;
+  color: #005c93;
+  font-weight: 500;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #000000;
+  font-size: 0.95rem;
+  padding: 20px;
+}
+
+.pacientes-filtrados {
+  list-style: none;
+  padding: 0;
+  margin: 2px 0 0 0;
+  border: 1px solid #ccc;
+  max-height: 180px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 6px;
+  position: absolute;
+  width: 480px;
+  z-index: 10;
+}
+
+.pacientes-filtrados li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.pacientes-filtrados li:hover {
+  background-color: #0071b2;
+  color: white;
+}
+
+
+.boton-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.boton-home:hover {
+  background-color: #218838;
+}
+

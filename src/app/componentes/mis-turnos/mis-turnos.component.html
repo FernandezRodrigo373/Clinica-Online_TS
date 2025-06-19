@@ -1,0 +1,134 @@
+<div class="contenedor-turnos">
+
+  <h1>Mis Turnos</h1>
+
+  <div class="filtros">
+    <input
+      type="text"
+      placeholder="Filtrar por especialidad"
+      [(ngModel)]="filtroEspecialidad"
+      (input)="aplicarFiltro()"
+      class="filtro-input"
+    />
+
+    <input
+      type="text"
+      [placeholder]="'Filtrar por ' + (usuarioTipo === 'paciente' ? 'especialista' : 'paciente')"
+      [(ngModel)]="filtroNombre"
+      (input)="aplicarFiltro()"
+      class="filtro-input"
+    />
+  </div>
+
+  <!-- Lista de turnos -->
+  <div *ngFor="let turno of turnosFiltrados" class="tarjeta-turno">
+    <h3>{{ turno.especialidad }}</h3>
+
+    <p *ngIf="usuarioTipo === 'paciente'">
+      <strong>Especialista:</strong> {{ turno.especialista?.nombre }} {{ turno.especialista?.apellido }}
+    </p>
+
+    <p *ngIf="usuarioTipo === 'especialista'">
+      <strong>Paciente:</strong> {{ turno.paciente?.nombre }} {{ turno.paciente?.apellido }}
+    </p>
+
+    <p><strong>Fecha:</strong> {{ turno.fecha | date: 'short' }}</p>
+    <p><strong>Estado:</strong> <span class="estado">{{ turno.estado }}</span></p>
+
+    <div class="acciones">
+      <!-- Acciones PACIENTE -->
+     <button *ngIf="usuarioTipo === 'paciente' && puedeCancelarPaciente(turno)" (click)="mostrarCancelacionPaciente(turno)">Cancelar turno</button>
+
+      <button *ngIf="usuarioTipo === 'paciente' && puedeCalificar(turno)" (click)="mostrarCalificacion(turno)">Calificar atención</button>
+      <button *ngIf="usuarioTipo === 'paciente' && puedeCompletarEncuesta(turno)" (click)="mostrarEncuesta(turno)">Completar encuesta</button>
+
+      <!-- Acciones ESPECIALISTA -->
+      <button *ngIf="usuarioTipo === 'especialista' && puedeCancelarEspecialista(turno)" (click)="mostrarRechazo(turno)">Cancelar turno</button>
+      <button *ngIf="usuarioTipo === 'especialista' && puedeRechazar(turno)" (click)="mostrarRechazo(turno)">Rechazar turno</button>
+      <button *ngIf="usuarioTipo === 'especialista' && puedeAceptar(turno)" (click)="mostrarAceptar(turno)">Aceptar turno</button>
+      <button *ngIf="usuarioTipo === 'especialista' && puedeFinalizar(turno)" (click)="mostrarFinalizar(turno)">Finalizar turno</button>
+
+      <div *ngIf="puedeVerResenia(turno)">
+        <p><strong>Reseña del especialista:</strong> {{ turno.resenia_especialista }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" *ngIf="motivoRechazoVisible">
+    <div class="modal">
+        <h2>Motivo de rechazo</h2>
+        <textarea [(ngModel)]="motivoRechazoTexto" placeholder="Ingrese el motivo..." rows="4"></textarea>
+        <div class="modal-buttons">
+        <button (click)="confirmarRechazo()">Confirmar</button>
+        <button (click)="cancelarRechazo()">Cancelar</button>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="motivoCancelacionVisible">
+        <div class="modal">
+            <h2>Motivo de cancelación</h2>
+            <textarea [(ngModel)]="motivoCancelacionTexto" placeholder="Ingrese el motivo..." rows="4"></textarea>
+            <div class="modal-buttons">
+            <button (click)="confirmarCancelacionPaciente()">Confirmar</button>
+            <button (click)="cancelarCancelacionPaciente()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+        <!-- MODAL ACEPTAR -->
+    <div class="modal-overlay" *ngIf="aceptarVisible">
+        <div class="modal">
+            <h2>Confirmar aceptación</h2>
+            <p>¿Desea aceptar este turno?</p>
+            <div class="modal-buttons">
+            <button (click)="confirmarAceptar()">Confirmar</button>
+            <button (click)="cancelarAceptar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FINALIZAR -->
+    <div class="modal-overlay" *ngIf="finalizarVisible">
+        <div class="modal">
+            <h2>Finalizar turno</h2>
+            <textarea [(ngModel)]="reseniaFinalizacion" placeholder="Ingrese diagnóstico o reseña..." rows="4"></textarea>
+            <div class="modal-buttons">
+            <button (click)="confirmarFinalizar()">Confirmar</button>
+            <button (click)="cancelarFinalizar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ENCUESTA -->
+    <div class="modal-overlay" *ngIf="encuestaVisible">
+        <div class="modal">
+            <h2>Contanos tu experiencia</h2>
+            <textarea [(ngModel)]="comentarioEncuesta" placeholder="Ingrese sus comentarios..." rows="4"></textarea>
+            <div class="modal-buttons">
+            <button (click)="confirmarEncuesta()">Confirmar</button>
+            <button (click)="cancelarEncuesta()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CALIFICACIÓN -->
+    <div class="modal-overlay" *ngIf="calificarVisible">
+        <div class="modal">
+            <div style="color: red; " *ngIf="mensaje" [ngClass]="mensaje.tipo" class="mensaje full-width">
+                {{ mensaje.texto }}
+            </div>
+            <h2>Calificar atención</h2>
+
+            <label>Calificación (1-5):</label>
+            <input type="number" [(ngModel)]="calificacionValor" min="1" max="5" />
+
+            <div class="modal-buttons">
+            <button (click)="confirmarCalificacion()">Confirmar</button>
+            <button (click)="cancelarCalificacion()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+</div>

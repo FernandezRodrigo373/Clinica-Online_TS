@@ -1,0 +1,82 @@
+<div  class="seccion-titulo">
+  <h1>Gestion de cuenta</h1>
+</div>
+
+<div class="contenedor">
+
+  <div class="perfil-container"> 
+
+    <!--info del usuario -->
+    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+    <div class="info-box" *ngIf="usuario">
+      <h2>Mi Perfil</h2>
+
+      <div class="foto-container">
+        <img *ngIf="usuario.imagen1" [src]="usuario.imagen1" alt="Imagen 1" />
+        <img *ngIf="usuario.imagen2" [src]="usuario.imagen2" alt="Imagen 2" />
+      </div>
+
+      <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+      <p><strong>Edad:</strong> {{ usuario.edad }}</p>
+
+      <p><strong>Especialidades:</strong></p>
+      <ul class="especialidades-list">
+        <li *ngFor="let esp of usuario.especialidades">{{ esp }}</li>
+      </ul>
+    </div>
+    <!--horarios -->
+      <div class="horarios-box" *ngIf="esEspecialista() && disponibilidadForm?.controls?.['dia']">
+          <h2>Asignar horario</h2>
+
+          <form [formGroup]="disponibilidadForm" (ngSubmit)="agregarHorario()">
+          <label for="dia">Día</label>
+          <select id="dia" formControlName="dia">
+              <option *ngFor="let d of diasSemana" [value]="d">{{ d }}</option>
+          </select>
+
+          <label for="hora_inicio">Hora de inicio</label>
+          <input id="hora_inicio" type="time" formControlName="hora_inicio" />
+
+          <label for="hora_fin">Hora de fin</label>
+          <input id="hora_fin" type="time" formControlName="hora_fin" />
+
+          <label for="especialidad">Especialidad</label>
+          <select id="especialidad" formControlName="especialidad">
+              <option *ngFor="let esp of usuario.especialidades" [value]="esp">
+              {{ esp }}
+              </option>
+          </select>
+
+          <button type="submit" [disabled]="disponibilidadForm.invalid">
+              Agregar Horario
+          </button>
+          <div style="color: red; " *ngIf="mensaje" [ngClass]="mensaje.tipo" class="mensaje">
+              {{ mensaje.texto }}
+          </div>
+          </form>
+      </div>
+
+        <div class="horarios-box2" *ngIf="esEspecialista() && disponibilidadForm?.controls?.['dia']">
+
+          <div class="horarios-list" *ngIf="horarios.length > 0">
+              <h3>Mis horarios:</h3>
+              <div class="horario-card" *ngFor="let h of horarios">
+                  <div class="horario-dia"><strong>{{ h.dia }}</strong></div>
+                  <div class="horario-horas">{{ h.hora_inicio }} a {{ h.hora_fin }}</div>
+                  <div class="horario-especialidad">Especialidad: <span>{{ h.especialidad }}</span></div>
+              </div>
+          </div>    
+        </div>
+
+      </div>
+      
+</div>
+
+<footer class="footer">
+  
+  <p>Clínica Digital © 2025 - Todos los derechos reservados</p>
+</footer>
+
+<!-- <button class="boton-home" (click)="irAlMenu()">Volver al menu</button> --> 

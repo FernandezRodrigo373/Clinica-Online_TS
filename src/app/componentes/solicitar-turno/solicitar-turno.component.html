@@ -1,0 +1,99 @@
+<div class="solicitar-turno">
+  <div class="seccion-titulo">
+    <h1>Solicitar Turno</h1>
+      <div *ngIf="mensaje" style="color: rgb(30, 255, 0); font-size: 2rem; " >
+        {{ mensaje.texto }}
+      </div>
+  </div>
+
+
+
+  <div class="perfil-container">
+    <!--Formulario de turnos -->
+    <div class="horarios-box">
+      <form [formGroup]="turnoForm" (ngSubmit)="solicitarTurno()">
+
+        <label>Especialidad:</label>
+        <select formControlName="especialidad" (change)="seleccionarEspecialista()">
+          <option value="" disabled selected>Seleccionar</option>
+          <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+        </select>
+
+        <label>Especialista:</label>
+        <select formControlName="especialista_id" (change)="seleccionarEspecialista()">
+          <option value="" disabled selected>Seleccionar</option>
+          <option *ngFor="let e of especialistas" [value]="e.id">
+            {{ e.nombre }} {{ e.apellido }}
+          </option>
+        </select>
+
+        <div *ngIf="diasDisponibles.length > 0">
+          <label>Día:</label>
+          <select formControlName="fecha" (change)="seleccionarFechaConfiguracion()">
+            <option value="" disabled selected>Seleccionar</option>
+            <option *ngFor="let d of diasDisponibles" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+
+        <label>Horario:</label>
+        <select formControlName="hora">
+          <option value="" disabled selected>Seleccionar</option>
+          <option *ngFor="let h of horariosDisponibles" [value]="h">{{ h }}</option>
+        </select>
+
+      <!--administrador -->
+      <div *ngIf="usuario?.tipo === 'administrador'">
+        <label>Buscar Paciente (DNI):</label>
+        <input type="text" 
+              [value]="pacienteBuscado" 
+              (input)="obtenerInputPaciente($event)" 
+              placeholder="Escriba DNI..." 
+              autocomplete="off" />
+
+        <ul *ngIf="pacientesFiltrados.length > 0" class="pacientes-filtrados">
+          <li *ngFor="let p of pacientesFiltrados" (click)="seleccionarPaciente(p)">
+            {{ p.dni }} - {{ p.nombre }} {{ p.apellido }}
+          </li>
+        </ul>
+      </div>
+
+        <button type="submit" [disabled]="turnoForm.invalid">Solicitar Turno</button>
+      </form>
+    </div>
+
+  <!--Info del paciente -->
+  <div class="info-box" *ngIf="usuario && (usuario.tipo !== 'administrador' || pacienteSeleccionado)">
+    <h2>Paciente</h2>
+
+    <div class="foto-container">
+      <img *ngIf="(usuario.tipo !== 'administrador' ? usuario.imagen1 : pacienteSeleccionado?.imagen1)"
+          [src]="usuario.tipo !== 'administrador' ? usuario.imagen1 : pacienteSeleccionado.imagen1"
+          alt="Imagen 1" />
+    </div>
+
+    <p><strong>Nombre:</strong> {{ usuario.tipo !== 'administrador' ? usuario.nombre : pacienteSeleccionado?.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ usuario.tipo !== 'administrador' ? usuario.apellido : pacienteSeleccionado?.apellido }}</p>
+    <p><strong>Email:</strong> {{ usuario.tipo !== 'administrador' ? usuario.email : pacienteSeleccionado?.email }}</p>
+    <p><strong>Edad:</strong> {{ usuario.tipo !== 'administrador' ? usuario.edad : pacienteSeleccionado?.edad }}</p>
+    <p><strong>Dni:</strong> {{ usuario.tipo !== 'administrador' ? usuario.dni : pacienteSeleccionado?.dni }}</p>
+
+
+
+
+    <div *ngIf="(usuario.tipo !== 'administrador' ? usuario.especialidades?.length : pacienteSeleccionado?.especialidades?.length)">
+      <p><strong>Especialidades:</strong></p>
+      <ul class="especialidades-list">
+        <li *ngFor="let esp of (usuario.tipo !== 'administrador' ? usuario.especialidades : pacienteSeleccionado?.especialidades)">
+          {{ esp }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+</div>
+<button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+
+
+<footer class="footer">
+  <p>Clínica Digital © 2025 - Todos los derechos reservados</p>
+</footer>

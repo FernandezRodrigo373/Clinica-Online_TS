@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase.service'; 
 
 import { SupabaseClient } from '@supabase/supabase-js';
-import { ChatComponent } from '../chat/chat.component';
+
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -11,28 +11,25 @@ import { NgIf } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone:true,
-  imports: [ RouterLink, ChatComponent],
+  imports: [ RouterLink, NgIf],
 })
 export class HomeComponent implements OnInit{
 
   emailUsuario?: string = '';
   userMap: { [key: number]: string } = {};
   usuarioId: number | null = null;
-  chatAbierto = false;
+  tipoUsuario: string | null = null;
+  mostrarBotonSeccion: boolean = false;
+  mostrarBotonTurnos: boolean = false;
+  mostrarBotonSeccionEspecialista: boolean = false;
+  mostrarBotonSeccionPaciente: boolean = false;
 
-  mostrarChat() {
-    this.chatAbierto = !this.chatAbierto;
-  }
-
+  nombre:string = '';
 
 
 
   constructor(private router: Router, private supabaseService: SupabaseService) {}
 
-
-  irAQuienSoy() {
-    this.router.navigate(['/quien-soy']);
-  }
 
   async ngOnInit() {
     await this.loadUsers();
@@ -44,10 +41,10 @@ export class HomeComponent implements OnInit{
 
     if (usuario) 
     {
+      this.emailUsuario = usuario.email;
 
-        this.emailUsuario = usuario.email;
-
-        for (const [id, email] of Object.entries(this.userMap)) {
+      for (const [id, email] of Object.entries(this.userMap)) 
+      {
 
         if (email === this.emailUsuario)
         {
@@ -57,13 +54,74 @@ export class HomeComponent implements OnInit{
       }
     }
 
+    this.tipoUsuario = await this.supabaseService.obtenerTipoUsuarioActual();
+    console.log("tipo: ", this.tipoUsuario);
+
+    if(this.tipoUsuario == 'administrador')
+    {
+      this.mostrarBotonSeccion = true;
+      this.mostrarBotonSeccionPaciente = false;
+      this.mostrarBotonSeccionEspecialista = false;
+
+
+    }
+    else if(this.tipoUsuario == 'especialista')
+    {
+      this.mostrarBotonSeccionEspecialista = true;
+      this.mostrarBotonSeccionPaciente = false;
+      this.mostrarBotonSeccion = false;
+
+      
+    }
+    else{
+      this.mostrarBotonSeccion = false;
+      this.mostrarBotonSeccionEspecialista = false;
+      this.mostrarBotonSeccionPaciente = true;
+
+    }
+
   }
+
+
+
+  irASeccionUsuarios()
+  {
+    this.router.navigate(['/seccion-usuarios']);
+  }
+
+  registrarUsuarios()
+  {
+    this.router.navigate(['/registro-admin']);
+  }
+
+  registrarTurnos()
+  {
+    this.router.navigate(['/mis-turnos']);
+  }
+  
+  administrarTurnos()
+  {
+    this.router.navigate(['/turnos-admin']);
+  }
+
+  irAMiPerfil()
+  {
+    this.router.navigate(['/perfil']);
+  }
+
+  irASacarTurnos()
+  {
+    this.router.navigate(['/solicitar-turno']);
+  }
+
+
 
   async obtenerUsuarioActual() 
   {
     const supabase = this.supabaseService.getSupabaseClient(); 
 
     const { data, error } = await supabase.auth.getUser();
+    
     if (error) 
     {
       console.error('Error al obtener usuario:', error);
@@ -91,23 +149,6 @@ export class HomeComponent implements OnInit{
   }
 
     
-  irASecuencia() {
-    this.router.navigate(['/juegos/juego-propio']);
-  }
-
-
-  irAAhorcado() {
-    this.router.navigate(['/juegos/ahorcado']);
-  }
-
-  irARanking() {
-    this.router.navigate(['/rankings']);
-  }
-
-  irAEncuestas() {
-    this.router.navigate(['/encuestas']);
-  }
-
 
   async cerrarSesion() {
      try {
