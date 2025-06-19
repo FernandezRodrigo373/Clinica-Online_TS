@@ -114,8 +114,8 @@ button:hover {
 
 .horarios-list {
   margin-top: 5px;
-    overflow-y: auto;
-     max-height: 450px;
+  overflow-y: auto;
+  max-height: 550px;
 }
 
 .horario-card {

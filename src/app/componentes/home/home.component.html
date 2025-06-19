@@ -10,7 +10,7 @@
 
     <button *ngIf="mostrarBotonSeccion" class="secundarios"  type="button" (click)="irASeccionUsuarios()">Gestionar usuarios</button>
     <button *ngIf="mostrarBotonSeccion" class="secundarios"  type="button" (click)="registrarUsuarios()">Registrar usuarios</button>
-    <button *ngIf="mostrarBotonSeccionEspecialista" class="secundarios"  type="button" (click)="registrarTurnos()">Ver mis turnos</button>
+    <button *ngIf="mostrarBotonSeccionEspecialista || mostrarBotonSeccionPaciente" class="secundarios"  type="button" (click)="registrarTurnos()">Ver mis turnos</button>
     <button *ngIf="mostrarBotonSeccion" class="secundarios"  type="button" (click)="administrarTurnos()">Administrar turnos</button>
     <button *ngIf="mostrarBotonSeccionEspecialista" class="secundarios"  type="button" (click)="irAMiPerfil()">Mi perfil</button>
     <button *ngIf="mostrarBotonSeccionPaciente || mostrarBotonSeccion" class="secundarios"  type="button" (click)="irASacarTurnos()">Reservar turnos</button>
