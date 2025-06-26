@@ -221,13 +221,15 @@ export class SolicitarTurnoComponent implements OnInit {
   }
 
 
-  async obtenerInputPaciente(event: Event) {
+  async obtenerInputPaciente(event: Event) 
+  {
     const value = (event.target as HTMLInputElement).value;
     this.pacienteBuscado = value;
     await this.buscarPacientes(value);
   }
 
-  async buscarPacientes(dni: string) {
+  async buscarPacientes(dni: string) 
+  {
     if (!dni || dni.trim().length < 3) {
       this.pacientesFiltrados = [];
       return;

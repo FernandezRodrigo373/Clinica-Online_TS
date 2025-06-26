@@ -54,11 +54,22 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 ![pantalla inicio](https://github.com/user-attachments/assets/c1fa5988-d723-4bc9-bbda-02ef120cf714)
 
 
-###  Sección de usuarios (solo administrador)
+###  Sección de registro admin (solo administrador)
 - El administrador puede **registrar nuevos usuarios**, incluidos otros administradores.
 - Los usuarios creados desde esta sección están **verificados automáticamente**.
 
 ![pantalla gestion de usuaris](https://github.com/user-attachments/assets/ccf82bf5-9a97-4008-9c16-d61b2e0b99a7)
+
+###  Sección de usuarios (solo administrador)
+- El administrador puede cambiar alternar la condicion del especialista entre aprobado y desaprobado.
+- El administrador puede ver la historia clinica de los pacientes buscandols por dni.
+
+
+
+
+###  Sección mis pacientes (solo especialistas)
+- El especialista puede ver la historia clinica de los pacientes que atendio buscandols por dni.
+
 
 
 ###  Mis turnos (pacientes y especialistas)
@@ -91,7 +102,7 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 ![pantalla solicitar turnos](https://github.com/user-attachments/assets/85e2017f-60e4-4ea5-a323-4ae9426c2340)
 
 
-###  Mi perfil (solo especialista)
+###  Mi perfil (especialista)
 - Muestra la información personal del especialista.
 - Permite **agregar nuevos horarios de trabajo**.
 - Los pacientes y administradores podrán ver y seleccionar esos horarios para asignar turnos.
@@ -99,12 +110,19 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 - 
 ![pantalla perfil](https://github.com/user-attachments/assets/096ff3fe-2a0f-4ae9-b22f-e47545fbd1c3)
 
+
+
+###  Mi perfil (paciente)
+- Muestra la información personal del paciente.
+- Permite **ver la historia clinica del paciente**.
+- Se podra descargar un PDF con la historia clinica.
+
 ---
 
 ##  Tecnologías utilizadas
 
 - Angular
-- Firebase / Supabase (según autenticación)
+- Firebase
 - HTML / CSS / TypeScript
 
 ---
