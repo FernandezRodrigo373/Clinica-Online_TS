@@ -64,12 +64,15 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 - El administrador puede cambiar alternar la condicion del especialista entre aprobado y desaprobado.
 - El administrador puede ver la historia clinica de los pacientes buscandols por dni.
 
+![seccion usuarios nueva](https://github.com/user-attachments/assets/277d74ce-f91c-4031-a702-408bd357b5b1)
 
+![seccion usuarios paciente nueva](https://github.com/user-attachments/assets/0cd04daa-826c-4430-a140-b57ef3d58052)
 
 
 ###  Sección mis pacientes (solo especialistas)
 - El especialista puede ver la historia clinica de los pacientes que atendio buscandols por dni.
 
+![seccion pacietnes](https://github.com/user-attachments/assets/cb6b4126-3ab2-4151-9c33-64411b220875)
 
 
 ###  Mis turnos (pacientes y especialistas)
@@ -98,8 +101,10 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 - En esta pantalla:
   - Se ve información del paciente.
   - El administrador debe **ingresar el DNI del paciente** para asignar un turno.
+  - La eleccion de especialista, especialdiades (del especialista) y fecha/horarios ahora se hace a traves de botones.
   
-![pantalla solicitar turnos](https://github.com/user-attachments/assets/85e2017f-60e4-4ea5-a323-4ae9426c2340)
+![solicitar turno nueva](https://github.com/user-attachments/assets/e1eca52e-42c4-46c3-8f26-85dfdcf62d0e)
+
 
 
 ###  Mi perfil (especialista)
@@ -107,7 +112,7 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 - Permite **agregar nuevos horarios de trabajo**.
 - Los pacientes y administradores podrán ver y seleccionar esos horarios para asignar turnos.
 - Se visualizan los horarios cargados a la derecha.
-- 
+  
 ![pantalla perfil](https://github.com/user-attachments/assets/096ff3fe-2a0f-4ae9-b22f-e47545fbd1c3)
 
 
@@ -116,6 +121,8 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 - Muestra la información personal del paciente.
 - Permite **ver la historia clinica del paciente**.
 - Se podra descargar un PDF con la historia clinica.
+  
+![mi perfil pacientes](https://github.com/user-attachments/assets/60e42af4-c26c-47cd-9035-eef0d1d85aca)
 
 ---
 
