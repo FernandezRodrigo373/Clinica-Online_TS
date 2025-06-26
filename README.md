@@ -57,8 +57,9 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 ###  Sección de registro admin (solo administrador)
 - El administrador puede **registrar nuevos usuarios**, incluidos otros administradores.
 - Los usuarios creados desde esta sección están **verificados automáticamente**.
+  
+![registro admin](https://github.com/user-attachments/assets/fd47c240-9fb1-409a-be83-cdad19935e40)
 
-![pantalla gestion de usuaris](https://github.com/user-attachments/assets/ccf82bf5-9a97-4008-9c16-d61b2e0b99a7)
 
 ###  Sección de usuarios (solo administrador)
 - El administrador puede cambiar alternar la condicion del especialista entre aprobado y desaprobado.
