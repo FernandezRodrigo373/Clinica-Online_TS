@@ -52,6 +52,16 @@ export class MisTurnosComponent {
 
   mensaje: { tipo: string, texto: string } | null = null;
 
+// HISTORIA CLINICA
+  altura: number = 0;
+  peso: number = 0;
+  temperatura: number = 0;
+  presion: string = '';
+
+  datosDinamicos: { clave: string; valor: string }[] = [
+    { clave: '', valor: '' },
+  ];
+
 
   constructor(private supabaseService: SupabaseService, private router: Router) {}
 
@@ -238,21 +248,6 @@ export class MisTurnosComponent {
     this.finalizarVisible = true;
   }
 
-  async confirmarFinalizar() {
-    if (!this.reseniaFinalizacion.trim()) return;
-
-    await this.supabaseService.getSupabaseClient()
-      .from('turnos')
-      .update({
-        estado: 'realizado',
-        resenia_especialista: this.reseniaFinalizacion
-      })
-      .eq('id', this.turnoSeleccionadoParaFinalizar.id);
-
-    this.finalizarVisible = false;
-    this.turnoSeleccionadoParaFinalizar = null;
-    await this.cargarTurnos();
-  }
 
   cancelarFinalizar() {
     this.finalizarVisible = false;
@@ -368,6 +363,60 @@ export class MisTurnosComponent {
   {
     this.router.navigate(['/home']);
   }
+
+  agregarDatoDinamico() {
+  if (this.datosDinamicos.length < 3) {
+    this.datosDinamicos.push({ clave: '', valor: '' });
+  }
+}
+
+  async confirmarFinalizar() {
+    if (!this.reseniaFinalizacion.trim()) return;
+
+    const supabase = this.supabaseService.getSupabaseClient();
+
+    const turnoId = this.turnoSeleccionadoParaFinalizar.id;
+
+    // turno realizado y guardar la reseña
+    await supabase
+      .from('turnos')
+      .update({
+        estado: 'realizado',
+        resenia_especialista: this.reseniaFinalizacion
+      })
+      .eq('id', turnoId);
+
+    // historia clínica
+    const datosDinamicosObj: { [key: string]: string } = {};
+    for (let dato of this.datosDinamicos) {
+      if (dato.clave && dato.valor) {
+        datosDinamicosObj[dato.clave] = dato.valor;
+      }
+    }
+
+    await supabase
+      .from('historia_clinica')
+      .insert({
+        turno_id: turnoId,
+        altura: this.altura,
+        peso: this.peso,
+        temperatura: this.temperatura,
+        presion: this.presion,
+        datos_dinamicos: datosDinamicosObj
+      });
+
+    this.reseniaFinalizacion = '';
+    this.datosDinamicos = [{ clave: '', valor: '' }];
+    this.altura = 0;
+    this.peso = 0;
+    this.temperatura = 0;
+    this.presion = '';
+    this.finalizarVisible = false;
+    this.turnoSeleccionadoParaFinalizar = null;
+
+    await this.cargarTurnos();
+  }
+
 
 
 

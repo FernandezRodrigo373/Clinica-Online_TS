@@ -1,80 +1,168 @@
-.especialista-card {
-  border: 1px solid #585151;
-  background-color: rgba(118, 211, 228, 0.911); 
-  padding: 16px 20px;
-  margin-bottom: 12px;
+.toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  background-color: #f7f7f7;
+  padding: 1rem;
   border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: rgb(0, 0, 0);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-  width: 50%;
-  margin-top: 50px;
-  margin-left: 15px; 
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.contenedor-usuarios {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 70vh; 
+.toolbar button {
+  background-color: #005c93;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.especialista-card:hover {
-  background-color: rgba(11, 226, 208, 0.788);
+.toolbar button:hover {
+  background-color: #4329d1;
 }
 
 h1 {
-  font-size: 3rem;
-  color: #0f1842;
   text-align: center;
-  margin: 50px;
+  margin-bottom: 1rem;
+  color: #ffffff;
 }
 
-.especialista-info {
-  font-weight: 600;
-  font-size: 1.1rem;
-  flex-grow: 1;
-  height: 100px;
-  margin-top: 5px;
-  justify-content: center;
+/*especialistas */
+.especialista-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  height: auto;
+  flex-wrap: wrap;
+  width: 800px;
+  align-items: center;
+  margin-left: 500px;
 }
 
-button.aprobar-btn {
-  color: white;
+.especialista-info p {
+  margin: 0.3rem 0;
+  color: #333;
+}
+
+.aprobar-btn {
+  padding: 0.6rem 1.2rem;
   border: none;
-
-  border-radius: 6px;
-  font-weight: 700;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  margin-right: 5px;
-  height: 50px;
-
-  min-width: 100px;
+  transition: all 0.3s ease;
 }
 
-button.aprobar-btn.aprobado {
-  background-color: #d32f2f; 
+
+.aprobado {
+  background-color: #e74c3c;
+  color: white;
 }
 
-button.aprobar-btn.no-aprobado {
-  background-color: #40a137; 
+.no-aprobado {
+  background-color: #2ecc71;
+  color: white;
 }
 
-button.aprobar-btn:hover.aprobado {
-  background-color: #b71c1c;
+.aprobar-btn:hover {
+  opacity: 0.9;
 }
 
-button.aprobar-btn:hover.no-aprobado {
-  background-color: #378530;
+.datos
+{
+  background-color: #ddbe84;
+  padding: 25px;
+  border: none;
+  border-radius: 25px;
 }
+
+.historia
+{
+  background-color: #d0dd84;
+  padding: 25px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 25px;
+
+}
+
+.paciente-box {
+  max-width: 700px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.paciente-box input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.pacientes-filtrados {
+  list-style: none;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.pacientes-filtrados li {
+  padding: 0.6rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pacientes-filtrados li:hover {
+  background-color: #f0f0f0;
+}
+
+/* paciente */
+.paciente-info {
+  margin-top: 2rem;
+}
+
+.paciente-info p {
+  margin: 0.4rem 0;
+}
+
+.foto-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.foto-container img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #005c93;
+}
+
+
+ul {
+  padding-left: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+ul li {
+  margin-bottom: 0.3rem;
+}
+
 
 .boton-home {
   position: fixed;

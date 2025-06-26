@@ -22,7 +22,8 @@ export class SolicitarTurnoComponent implements OnInit {
   pacientes: any[] = [];
   pacienteSeleccionado: any = null;
   pacienteBuscado: string = '';
-pacientesFiltrados: any[] = [];
+  pacientesFiltrados: any[] = [];
+  especialidadesFiltradas: string[] = [];
 
   mensaje: { tipo: string, texto: string } | null = null;
 
@@ -55,7 +56,7 @@ pacientesFiltrados: any[] = [];
 
     const { data: especialistas } = await this.supabaseService.getSupabaseClient()
       .from('usuarios')
-      .select('id, nombre, apellido, especialidades')
+      .select('id, nombre, apellido, especialidades, imagen1')
       .eq('tipo', 'especialista')
       .eq('aprobado', true);
 
@@ -68,6 +69,7 @@ pacientesFiltrados: any[] = [];
       this.especialidades = Array.from(allEspecialidades) as string[];
     }
 
+
     if (usuarioActual.tipo === 'administrador') {
       const { data: pacientes } = await this.supabaseService.getSupabaseClient()
         .from('usuarios')
@@ -75,6 +77,8 @@ pacientesFiltrados: any[] = [];
         .eq('tipo', 'paciente');
       this.pacientes = pacientes || [];
     }
+
+    
   }
 
 
@@ -188,7 +192,8 @@ pacientesFiltrados: any[] = [];
     this.turnoForm.patchValue({ hora: '' });
   }
 
-  async solicitarTurno() {
+  async solicitarTurno() 
+  {
     if (this.turnoForm.invalid) return;
 
     const { especialidad, especialista_id, fecha, hora, paciente_id } = this.turnoForm.value;
@@ -206,7 +211,8 @@ pacientesFiltrados: any[] = [];
         estado: 'pendiente'
       });
 
-    if (!error) {
+    if (!error) 
+    {
       this.mostrarMensaje("error" ," Turno solicitado correctamente.");
       this.turnoForm.reset();
       this.horariosDisponibles = [];
@@ -260,7 +266,43 @@ pacientesFiltrados: any[] = [];
     }, 3000);
   }
 
-    irAlMenu() 
+  filtrarEspecialidades(especialista: any) 
+  {
+    this.especialidadesFiltradas = especialista.especialidades || [];
+    this.turnoForm.patchValue({ especialidad: '' }); 
+  }
+
+  getImagenEspecialidad(especialidad: string): string 
+  {
+    switch (especialidad.toLowerCase()) {
+      case 'cardiologia': return '/assets/cardiologia.png';
+      case 'dermatologia': return '/assets/dermatologia.png';
+      case 'pediatria': return '/assets/pediatria.png';
+      case 'urologia': return '/assets/urologia.png';
+      case 'urologo': return '/assets/urologo.png';
+      case 'traumatologia': return '/assets/traumatologia.png';
+      case 'neurologa': return '/assets/neurologia.png';
+      default: return '/assets/especialidad.png';
+    }
+  }
+
+  formatearHoraAMPM(hora24: string): string 
+  {
+    const [horas, minutos] = hora24.split(':').map(Number);
+    const date = new Date();
+    date.setHours(horas);
+    date.setMinutes(minutos);
+
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  }
+
+
+
+  irAlMenu() 
   {
     this.router.navigate(['/home']);
   }

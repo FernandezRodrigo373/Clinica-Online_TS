@@ -110,67 +110,107 @@ async obtenerUsuarioYId(): Promise<{ id: number, email: string, tipo: string } |
   }
 
   async actualizarAprobacionEspecialista(id: number, aprobado: boolean): Promise<boolean> {
-    const { error } = await this.supabase
-      .from('usuarios')
-      .update({ aprobado })
-      .eq('id', id);
+      const { error } = await this.supabase
+        .from('usuarios')
+        .update({ aprobado })
+        .eq('id', id);
 
-    if (error) {
-      console.error('Error al actualizar aprobado:', error);
-      return false;
+      if (error) {
+        console.error('Error al actualizar aprobado:', error);
+        return false;
+      }
+
+      return true;
     }
 
-    return true;
+    async obtenerTurnosDelPaciente(): Promise<any[]> {
+    const { data: userData, error: userError } = await this.supabase.auth.getUser();
+    if (userError || !userData.user) return [];
+
+    const { data: usuarioData, error: usuarioError } = await this.supabase
+      .from('usuarios')
+      .select('auth_uid')
+      .eq('email', userData.user.email)
+      .single();
+
+    if (usuarioError || !usuarioData?.auth_uid) return [];
+
+    const { data: turnos, error: turnosError } = await this.supabase
+      .from('turnos')
+      .select('*')
+      .eq('paciente_uid', usuarioData.auth_uid)
+      .order('fecha', { ascending: true });
+
+    if (turnosError) {
+      console.error('Error al obtener turnos:', turnosError);
+      return [];
+    }
+
+    return turnos;
   }
 
-  async obtenerTurnosDelPaciente(): Promise<any[]> {
-  const { data: userData, error: userError } = await this.supabase.auth.getUser();
-  if (userError || !userData.user) return [];
+  async obtenerDatosUsuarioCompleto(): Promise<any | null> {
+      const { data: userData, error: userError } = await this.supabase.auth.getUser();
+      if (userError || !userData.user?.email) {
+        console.error('Error al obtener usuario:', userError);
+        return null;
+      }
 
-  const { data: usuarioData, error: usuarioError } = await this.supabase
-    .from('usuarios')
-    .select('auth_uid')
-    .eq('email', userData.user.email)
-    .single();
+      const email = userData.user.email;
 
-  if (usuarioError || !usuarioData?.auth_uid) return [];
+      const { data: usuarioData, error: idError } = await this.supabase
+        .from('usuarios')
+        .select('*')
+        .eq('email', email)
+        .single();
 
-  const { data: turnos, error: turnosError } = await this.supabase
-    .from('turnos')
-    .select('*')
-    .eq('paciente_uid', usuarioData.auth_uid)
-    .order('fecha', { ascending: true });
+      if (idError || !usuarioData) {
+        console.error('Error al obtener datos completos del usuario:', idError);
+        return null;
+      }
 
-  if (turnosError) {
-    console.error('Error al obtener turnos:', turnosError);
-    return [];
+      return usuarioData;
   }
 
-  return turnos;
-}
+  async obtenerHistoriasClinicasPaciente(): Promise<any[]> {
+    const { data: userData, error: userError } = await this.supabase.auth.getUser();
+    if (userError || !userData.user?.email) return [];
 
-async obtenerDatosUsuarioCompleto(): Promise<any | null> {
-  const { data: userData, error: userError } = await this.supabase.auth.getUser();
-  if (userError || !userData.user?.email) {
-    console.error('Error al obtener usuario:', userError);
-    return null;
+    const { data: usuarioData, error: usuarioError } = await this.supabase
+      .from('usuarios')
+      .select('id')
+      .eq('email', userData.user.email)
+      .single();
+
+    if (usuarioError || !usuarioData?.id) return [];
+
+    const { data, error } = await this.supabase
+      .from('turnos')
+      .select(`
+        id,
+        fecha,
+        especialista:usuarios!fk_especialista_id(nombre, apellido),
+        historia_clinica (
+          altura,
+          peso,
+          temperatura,
+          presion,
+          datos_dinamicos,
+          created_at
+        )
+      `)
+      .eq('paciente_id', usuarioData.id)
+      .eq('estado', 'realizado')
+      .order('fecha', { ascending: false });
+
+    if (error) {
+      console.error('Error al obtener historias clínicas:', error);
+      return [];
+    }
+
+    return data;
   }
 
-  const email = userData.user.email;
-
-  const { data: usuarioData, error: idError } = await this.supabase
-    .from('usuarios')
-    .select('*')  // todos los campos
-    .eq('email', email)
-    .single();
-
-  if (idError || !usuarioData) {
-    console.error('Error al obtener datos completos del usuario:', idError);
-    return null;
-  }
-
-  return usuarioData;
-}
 
 
 

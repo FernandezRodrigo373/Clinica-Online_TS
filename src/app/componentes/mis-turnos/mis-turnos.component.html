@@ -87,17 +87,56 @@
         </div>
     </div>
 
-    <!-- MODAL FINALIZAR -->
-    <div class="modal-overlay" *ngIf="finalizarVisible">
+      <!-- MODAL FINALIZAR Y CARGA DE HISTORIA CLÍNICA -->
+      <div class="modal-overlay" *ngIf="finalizarVisible">
         <div class="modal">
-            <h2>Finalizar turno</h2>
-            <textarea [(ngModel)]="reseniaFinalizacion" placeholder="Ingrese diagnóstico o reseña..." rows="4"></textarea>
-            <div class="modal-buttons">
-            <button (click)="confirmarFinalizar()">Confirmar</button>
-            <button (click)="cancelarFinalizar()">Cancelar</button>
-            </div>
+          <h2>Finalizar Turno</h2>
+
+          <div class="modal-section">
+            <label for="resenia">Reseña o diagnóstico</label>
+            <textarea id="resenia" [(ngModel)]="reseniaFinalizacion" rows="3" placeholder="Describa brevemente la atención..."></textarea>
+          </div>
+
+          <h3 class="section-title">Historia Clínica</h3>
+
+          <div class="modal-section">
+            <label for="altura">Altura (cm)</label>
+            <input id="altura" type="number" [(ngModel)]="altura" placeholder="Ej: 170" />
+          </div>
+
+          <div class="modal-section">
+            <label for="peso">Peso (kg)</label>
+            <input id="peso" type="number" [(ngModel)]="peso" placeholder="Ej: 70" />
+          </div>
+
+          <div class="modal-section">
+            <label for="temperatura">Temperatura (°C)</label>
+            <input id="temperatura" type="number" [(ngModel)]="temperatura" placeholder="Ej: 36.5" />
+          </div>
+
+          <div class="modal-section">
+            <label for="presion">Presión Arterial</label>
+            <input id="presion" type="text" [(ngModel)]="presion" placeholder="Ej: 120/80" />
+          </div>
+
+          <h4 class="section-title">Datos adicionales (máximo 3)</h4>
+
+          <div class="modal-section" *ngFor="let dato of datosDinamicos; let i = index">
+            <label>Clave</label>
+            <input type="text" [(ngModel)]="dato.clave" placeholder="Ej: caries" />
+            <label>Valor</label>
+            <input type="text" [(ngModel)]="dato.valor" placeholder="Ej: 4" />
+          </div>
+
+          <button class="agregar-btn" *ngIf="datosDinamicos.length < 3" (click)="agregarDatoDinamico()">➕ Agregar otro dato</button>
+
+          <div class="modal-buttons">
+            <button class="confirmar-btn" (click)="confirmarFinalizar()">✅ Confirmar</button>
+            <button class="cancelar-btn" (click)="cancelarFinalizar()">❌ Cancelar</button>
+          </div>
         </div>
-    </div>
+      </div>
+
 
     <!-- MODAL ENCUESTA -->
     <div class="modal-overlay" *ngIf="encuestaVisible">

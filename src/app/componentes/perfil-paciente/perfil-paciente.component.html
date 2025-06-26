@@ -1,0 +1,61 @@
+<header class="toolbar">
+  <h1>Mi Perfil</h1>
+
+</header>
+<div class="contenedor-historias">
+  <div class="historiales-container">
+    <div *ngIf="historias.length === 0">
+      <p>No se encontraron atenciones finalizadas aún.</p>
+    </div>
+
+    <div *ngFor="let historia of historias" class="card-historia">
+      <h2>Historia Clínica</h2>
+      <h3>Fecha: {{ historia.fecha | date:'shortDate' }}</h3>
+      <p><strong>Especialista:</strong> {{ historia.especialista?.nombre }} {{ historia.especialista?.apellido }}</p>
+
+
+      <h4>Datos Clínicos</h4>
+      <ul>
+        <li><strong>Altura:</strong> {{ historia.historia_clinica?.altura }} cm</li>
+        <li><strong>Peso:</strong> {{ historia.historia_clinica?.peso }} kg</li>
+        <li><strong>Temperatura:</strong> {{ historia.historia_clinica?.temperatura }} °C</li>
+        <li><strong>Presión:</strong> {{ historia.historia_clinica?.presion }}</li>
+      </ul>
+
+      <div *ngIf="historia.historia_clinica?.datos_dinamicos">
+        <h4>Datos adicionales</h4>
+        <ul>
+          <li *ngFor="let key of (historia.historia_clinica?.datos_dinamicos | keyvalue)">
+            <strong>{{ key.key }}:</strong> {{ key.value }}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="info-box" *ngIf="usuario">
+    <h2>Datos Personales</h2>
+
+    <div class="foto-container">
+      <img *ngIf="usuario.imagen1" [src]="usuario.imagen1" alt="Imagen del paciente" />
+    </div>
+
+    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+    <p><strong>Email:</strong> {{ usuario.email }}</p>
+    <p><strong>Edad:</strong> {{ usuario.edad }}</p>
+    <p><strong>DNI:</strong> {{ usuario.dni }}</p>
+
+  <button class="btn-descarga" (click)="generarPdf()">Descargar PDF</button>
+
+  </div>
+</div>
+
+    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+
+<footer class="footer">
+  <p>Clínica Digital © 2025 - Todos los derechos reservados</p>
+</footer>
+
+

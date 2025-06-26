@@ -1,0 +1,126 @@
+.contenedor-pacientes {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
+}
+
+
+.toolbar {
+  background-color: #1976d2;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 0 0 8px 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 2px solid #1976d2;
+  border-radius: 8px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #0d47a1;
+  box-shadow: 0 0 6px #2196f3;
+}
+
+.pacientes-filtrados {
+  list-style: none;
+  padding: 0;
+  border-radius: 8px;
+  background: white;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.pacientes-filtrados li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pacientes-filtrados li:hover {
+  background-color: #e3f2fd;
+}
+
+.paciente-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.foto-container {
+  display: flex;
+  justify-content: center;
+}
+
+.foto-container img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #1976d2;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.historia {
+  margin-top: 1rem;
+  background-color: #f1f8ff;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #bbdefb;
+}
+
+.historia h3 {
+  color: #0d47a1;
+  margin-bottom: 1rem;
+}
+
+.historia ul {
+  padding: 0;
+  list-style: none;
+}
+
+.historia li {
+  padding: 1rem;
+}
+
+.boton-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  width: 140px;
+}
+
+.boton-home:hover {
+  background-color: #218838;
+}
+

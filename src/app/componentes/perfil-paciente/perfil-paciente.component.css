@@ -1,0 +1,181 @@
+.contenedor-historias {
+  display: grid;
+  grid-template-columns: 3fr 1.2fr; 
+  gap: 40px;
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+.historiales-container {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding-right: 12px;
+}
+
+
+.card-historia {
+  background: #f8f8f8;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-size: 1.05rem;
+}
+
+.card-historia h2 {
+  font-size: 1.5rem;
+  color: #1459db;
+  margin-bottom: 12px;
+}
+
+.card-historia h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.card-historia h4 {
+  font-size: 1.1rem;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.card-historia ul {
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.card-historia li {
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.info-box {
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 1rem;
+  height: fit-content;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.info-box h2 {
+  font-size: 1.3rem;
+  color: #0071b2;
+  margin-bottom: 16px;
+}
+
+.foto-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.foto-container img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #0071b2;
+}
+
+.especialidades-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.especialidades-list li {
+  background-color: #e6f2fa;
+  color: #005c93;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.contenedor-historias h1 {
+  grid-column: span 2;
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 40px;
+  color: #ffffff;
+}
+
+.toolbar {
+  position: sticky; 
+  top: 0;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toolbar h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #0071b2;
+}
+
+
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #000000;
+  font-size: 0.95rem;
+  padding: 70px;
+  background-color: white;
+}
+
+.btn-descarga {
+  background-color: #1976d2;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-descarga:hover {
+  background-color: #0d47a1;
+}
+
+.boton-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.boton-home:hover {
+  background-color: #218838;
+}
+
+
+
+
+

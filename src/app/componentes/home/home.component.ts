@@ -89,6 +89,12 @@ export class HomeComponent implements OnInit{
     this.router.navigate(['/seccion-usuarios']);
   }
 
+    irASeccionPacientes()
+  {
+    this.router.navigate(['/seccion-pacientes']);
+  }
+
+
   registrarUsuarios()
   {
     this.router.navigate(['/registro-admin']);
@@ -108,6 +114,12 @@ export class HomeComponent implements OnInit{
   {
     this.router.navigate(['/perfil']);
   }
+
+  irAMiPerfilPaciente()
+  {
+    this.router.navigate(['/perfil-paciente']);
+  }
+
 
   irASacarTurnos()
   {

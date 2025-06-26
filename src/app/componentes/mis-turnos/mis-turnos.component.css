@@ -145,31 +145,92 @@ h1 {
 }
 
 .modal {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
   width: 90%;
-  max-width: 400px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  font-family: "Segoe UI", sans-serif;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.modal h3.section-title,
+.modal h4.section-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #1e90ff;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.modal-section {
+  margin-bottom: 15px;
+}
+
+.modal label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 .modal textarea {
-  width: 100%;
   resize: none;
+}
+
+.agregar-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
   margin-top: 10px;
-  padding: 8px;
 }
 
 .modal-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .modal-buttons button {
-  padding: 6px 12px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
 }
+
+.confirmar-btn {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.cancelar-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
 
 .boton-home {
   position: fixed;

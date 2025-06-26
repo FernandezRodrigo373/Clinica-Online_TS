@@ -9,37 +9,58 @@
 
 
   <div class="perfil-container">
-    <!--Formulario de turnos -->
     <div class="horarios-box">
       <form [formGroup]="turnoForm" (ngSubmit)="solicitarTurno()">
 
-        <label>Especialidad:</label>
-        <select formControlName="especialidad" (change)="seleccionarEspecialista()">
-          <option value="" disabled selected>Seleccionar</option>
-          <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
-        </select>
-
-        <label>Especialista:</label>
-        <select formControlName="especialista_id" (change)="seleccionarEspecialista()">
-          <option value="" disabled selected>Seleccionar</option>
-          <option *ngFor="let e of especialistas" [value]="e.id">
-            {{ e.nombre }} {{ e.apellido }}
-          </option>
-        </select>
-
-        <div *ngIf="diasDisponibles.length > 0">
-          <label>Día:</label>
-          <select formControlName="fecha" (change)="seleccionarFechaConfiguracion()">
-            <option value="" disabled selected>Seleccionar</option>
-            <option *ngFor="let d of diasDisponibles" [value]="d">{{ d }}</option>
-          </select>
+    <!-- especialistas -->
+    <h1>Especialistas</h1>
+    <div class="grid-especialistas">
+        <div *ngFor="let e of especialistas" class="card-especialista"
+            [class.seleccionado]="turnoForm.value.especialista_id === e.id"
+            (click)="turnoForm.patchValue({ especialista_id: e.id }); filtrarEspecialidades(e)">
+          <img [src]="e.imagen1" alt="Foto especialista">
+          <p>{{ e.nombre }} {{ e.apellido }}</p>
         </div>
+      </div>
 
+      <!-- especialidades -->
+      <div *ngIf="especialidadesFiltradas.length > 0" class="grid-especialidades">
+        <h1>Especialidades</h1>
+        <div *ngFor="let esp of especialidadesFiltradas" class="card-especialidad"
+            [class.seleccionado]="turnoForm.value.especialidad === esp"
+            (click)="turnoForm.patchValue({ especialidad: esp }); seleccionarEspecialista()">
+          <img [src]="getImagenEspecialidad(esp)" alt="Foto especialidad">
+          <p>{{ esp }}</p>
+        </div>
+      </div>
+
+      <!-- Dias -->
+      <div *ngIf="diasDisponibles.length > 0" class="grid-dias">
+        <label>Día:</label>
+        <div class="botones-dias">
+          <button type="button" *ngFor="let d of diasDisponibles"
+                  [ngClass]="{'btn-dia-seleccionado': turnoForm.value.fecha === d}"
+                  class="btn-dia"
+                  (click)="turnoForm.patchValue({ fecha: d }); seleccionarFechaConfiguracion()">
+            {{ d | date: 'dd-MM-yyyy' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Horarios -->
+      <div *ngIf="horariosDisponibles.length > 0" class="grid-horas">
         <label>Horario:</label>
-        <select formControlName="hora">
-          <option value="" disabled selected>Seleccionar</option>
-          <option *ngFor="let h of horariosDisponibles" [value]="h">{{ h }}</option>
-        </select>
+        <div class="botones-horas">
+          <button type="button" *ngFor="let h of horariosDisponibles"
+                  [ngClass]="{'btn-hora-seleccionado': turnoForm.value.hora === h}"
+                  class="btn-hora"
+                  (click)="turnoForm.patchValue({ hora: h })">
+            {{ formatearHoraAMPM(h) }}
+          </button>
+        </div>
+      </div>
+
+
 
       <!--administrador -->
       <div *ngIf="usuario?.tipo === 'administrador'">
@@ -61,7 +82,7 @@
       </form>
     </div>
 
-  <!--Info del paciente -->
+  <!-- Info paciente -->
   <div class="info-box" *ngIf="usuario && (usuario.tipo !== 'administrador' || pacienteSeleccionado)">
     <h2>Paciente</h2>
 
