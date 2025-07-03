@@ -3,79 +3,46 @@
 </header>
 
 <div class="contenedor-pacientes">
-  <div class="paciente-box">
-    <label>Buscar paciente por DNI:</label>
-    <input
-      type="text"
-      [value]="pacienteBuscado"
-      (input)="obtenerInputPaciente($event)"
-      placeholder="Ingrese DNI..."
-      autocomplete="off"
-    />
+  <div class="card-paciente" *ngFor="let p of pacientesConTurnos">
+    <img *ngIf="p.paciente.imagen1" [src]="p.paciente.imagen1" alt="Foto paciente" />
+    
+    <div class="datos">
+      <h3>Nombre: {{ p.paciente.nombre }} {{ p.paciente.apellido }}</h3>
+      <p><strong>DNI:</strong> {{ p.paciente.dni }}</p>
+      <p><strong>Edad:</strong> {{ p.paciente.edad }}</p>
+      <p><strong>Email:</strong> {{ p.paciente.email }}</p>
+    </div>
 
-    <ul *ngIf="pacientesFiltrados.length > 0" class="pacientes-filtrados">
-      <li *ngFor="let p of pacientesFiltrados" (click)="seleccionarPaciente(p)">
-        {{ p.dni }} - {{ p.nombre }} {{ p.apellido }}
-      </li>
-    </ul>
+    <div class="ultimos-turnos">
+      <h4>Últimos turnos</h4>
+      <ul>
+        <li *ngFor="let t of p.turnos">
+          {{ t.fecha | date:'dd/MM/yyyy HH:mm' }}
+        </li>
+      </ul>
+    </div>
 
-    <div *ngIf="pacienteSeleccionado" class="paciente-info">
-      <div class="datos">
-        <h2>Paciente Seleccionado</h2>
-        <div class="foto-container">
-          <img
-            *ngIf="pacienteSeleccionado.imagen1"
-            [src]="pacienteSeleccionado.imagen1"
-            alt="Paciente"
-          />
-        </div>
-        <p><strong>Nombre:</strong> {{ pacienteSeleccionado.nombre }}</p>
-        <p><strong>Apellido:</strong> {{ pacienteSeleccionado.apellido }}</p>
-        <p><strong>Email:</strong> {{ pacienteSeleccionado.email }}</p>
-        <p><strong>Edad:</strong> {{ pacienteSeleccionado.edad }}</p>
-        <p><strong>DNI:</strong> {{ pacienteSeleccionado.dni }}</p>
+    <button style="width: 50%; height: 50px; width: 200px; background-color: #1976d2; color: white; border: none; border-radius: 20px;" (click)="verHistoria(p.paciente.id)">Ver historia clínica</button>
 
-        <div *ngIf="pacienteSeleccionado.especialidades?.length">
-          <p><strong>Especialidades:</strong></p>
+    <div *ngIf="pacienteConHistoriaId === p.paciente.id && historias.length > 0" class="historia-clinica">
+      <h4>Historia Clínica Completa</h4>
+      <div *ngFor="let h of historias">
+        <p><strong>Fecha:</strong> {{ h.fecha | date:'short' }}</p>
+        <p><strong>Especialista:</strong> {{ h.especialista.nombre }} {{ h.especialista.apellido }}</p>
+        <p><strong>Altura:</strong> {{ h.historia_clinica?.altura }} cm</p>
+        <p><strong>Peso:</strong> {{ h.historia_clinica?.peso }} kg</p>
+        <p><strong>Temperatura:</strong> {{ h.historia_clinica?.temperatura }} °C</p>
+        <p><strong>Presión:</strong> {{ h.historia_clinica?.presion }}</p>
+
+        <div *ngIf="h.historia_clinica?.datos_dinamicos">
+          <p><strong>Otros datos:</strong></p>
           <ul>
-            <li *ngFor="let esp of pacienteSeleccionado.especialidades">
-              {{ esp }}
+            <li *ngFor="let key of (h.historia_clinica.datos_dinamicos | keyvalue)">
+              {{ key.key }}: {{ key.value }}
             </li>
           </ul>
         </div>
-      </div>
-
-      <div class="historia">
-        <div *ngIf="historias.length > 0">
-          <h3>Historia Clínica</h3>
-          <ul>
-            <li *ngFor="let h of historias">
-              <p><strong>Fecha:</strong> {{ h.fecha | date:'short' }}</p>
-              <p><strong>Especialista:</strong> {{ h.especialista.nombre }} {{ h.especialista.apellido }}</p>
-
-              <div *ngIf="h.historia_clinica">
-                <p><strong>Altura:</strong> {{ h.historia_clinica.altura }} cm</p>
-                <p><strong>Peso:</strong> {{ h.historia_clinica.peso }} kg</p>
-                <p><strong>Temperatura:</strong> {{ h.historia_clinica.temperatura }} °C</p>
-                <p><strong>Presión:</strong> {{ h.historia_clinica.presion }}</p>
-
-                <div *ngIf="h.historia_clinica.datos_dinamicos">
-                  <p><strong>Otros datos:</strong></p>
-                  <ul>
-                    <li *ngFor="let key of (h.historia_clinica.datos_dinamicos | keyvalue)">
-                      {{ key.key }}: {{ key.value }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <hr />
-            </li>
-          </ul>
-        </div>
-
-        <div *ngIf="historias.length === 0">
-          <p>No hay historias clínicas registradas para este paciente.</p>
-        </div>
+        <hr />
       </div>
     </div>
   </div>

@@ -1,0 +1,134 @@
+<div class="contenedor-graficos">
+
+    <h2>Informes</h2>
+
+    <button (click)="cargarLogIngresos()">Cargar Log de Ingresos</button>
+    
+    <!-- log de ingresos -->
+    <hr />
+    <table border="1" *ngIf="logIngresos.length > 0">
+        <h3>Ingresos</h3>
+    <thead>
+        <tr>
+        <th>Usuario ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Fecha y Hora</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let log of logIngresos">
+        <td>{{log.usuario_id}}</td>
+        <td>{{log.nombre}}</td>
+        <td>{{log.apellido}}</td>
+        <td>{{log.email}}</td>
+        <td>{{log.fecha_hora | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+        </tr>
+    </tbody>
+    </table>
+    <button *ngIf="logIngresos.length > 0" (click)="descargarTabla('ingresos')">Descargar Excel</button>
+
+    <hr />
+
+    <!-- turnos por Especialidad -->
+    <div class="grafico-barras">
+        <canvas #graficoTurnosEspecialidad></canvas>
+    </div>
+    <button (click)="descargarGrafico('especialidad')">Descargar PDF</button>
+
+    <hr />
+
+    <!-- turnos por diaa -->
+    <h1>Cantidad de turnos por dia</h1>
+     <div class="grafico-torta">
+        <canvas #graficoTurnosDia></canvas>
+    </div>
+    <button (click)="descargarGrafico('dia')">Descargar PDF</button>
+
+    <hr />
+
+    <!-- filtros para informes por medico -->
+    <div *ngIf="mensaje" [ngClass]="mensaje.tipo" class="mensaje full-width">
+        {{ mensaje.texto }}
+    </div>
+    <h3>Turnos por medico</h3>
+    <div>
+    <label>Medico:
+        <select [(ngModel)]="medicoSeleccionado">
+        <option [ngValue]="null">Seleccione...</option>
+        <option *ngFor="let medico of medicos" [ngValue]="medico.id">
+            {{medico.nombre}} {{medico.apellido}}
+        </option>
+        </select>
+    </label>
+    </div>
+    <div>
+    <label>Desde: <input type="date" [(ngModel)]="fechaDesde" /></label>
+    <label>Hasta: <input type="date" [(ngModel)]="fechaHasta" /></label>
+    </div>
+    <div>
+
+    <button (click)="cargarTurnosSolicitadosPorMedico()">Cargar Turnos Solicitados</button>
+    <button (click)="cargarTurnosFinalizadosPorMedico()">Cargar Turnos Finalizados</button>
+    </div>
+
+
+    <!-- turnos solicitados -->
+    <table border="1" *ngIf="turnosSolicitadosPorMedico.length > 0">
+        <h4>Turnos Solicitados</h4>
+    <thead>
+        <tr>
+        <th>ID Turno</th>
+        <th>Paciente ID</th>
+        <th>Especialidad</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let turno of turnosSolicitadosPorMedico">
+        <td>{{turno.id}}</td>
+        <td>{{turno.paciente_id}}</td>
+        <td>{{turno.especialidad}}</td>
+        <td>{{turno.fecha | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{turno.estado}}</td>
+        </tr>
+    </tbody>
+    </table>
+    <button *ngIf="turnosSolicitadosPorMedico.length > 0" (click)="descargarTabla('solicitados')">Descargar Excel</button>
+
+    <!-- <div style="height: 300px;">
+    <canvas #graficoTurnosSolicitados></canvas>
+    </div> -->
+
+    <!-- turnos finalizados -->
+    <table border="1" *ngIf="turnosFinalizadosPorMedico.length > 0">
+        <h4>Turnos Finalizados</h4>
+    <thead>
+        <tr>
+        <th>ID Turno</th>
+        <th>Paciente ID</th>
+        <th>Especialidad</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let turno of turnosFinalizadosPorMedico">
+        <td>{{turno.id}}</td>
+        <td>{{turno.paciente_id}}</td>
+        <td>{{turno.especialidad}}</td>
+        <td>{{turno.fecha | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{turno.estado}}</td>
+        </tr>
+    </tbody>
+    </table>
+    <button *ngIf="turnosFinalizadosPorMedico.length > 0" (click)="descargarTabla('finalizados')">Descargar Excel</button>
+    <!-- 
+    <div style="height: 300px;">
+    <canvas #graficoTurnosFinalizados></canvas>
+    </div>-->
+</div>
+
+<button class="boton-home" (click)="irAlMenu()">Volver al menu</button>

@@ -22,6 +22,8 @@ export const routes: Routes = [
     {path: 'perfil', loadComponent:() => import('./componentes/perfil/perfil.component').then(c => c.PerfilComponent),data: { animation: 'animacion2' }},
     {path: 'perfil-paciente', loadComponent:() => import('./componentes/perfil-paciente/perfil-paciente.component').then(c => c.PerfilPacienteComponent),data: { animation: 'animacion2' }},
     {path: 'solicitar-turno', loadComponent:() => import('./componentes/solicitar-turno/solicitar-turno.component').then(c => c.SolicitarTurnoComponent),data: { animation: 'animacion2' }},
+    {path: 'informes', loadComponent:() => import('./componentes/informes/informes.component').then(c => c.InformesComponent),data: { animation: 'animacion2' }},
+
 
     
 ];

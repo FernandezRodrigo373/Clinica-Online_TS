@@ -99,7 +99,7 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
   - Se ve información del paciente.
   - El administrador debe **ingresar el DNI del paciente** para asignar un turno.
   
-![pantalla solicitar turnos](https://github.com/user-attachments/assets/85e2017f-60e4-4ea5-a323-4ae9426c2340)
+
 
 
 ###  Mi perfil (especialista)

@@ -212,6 +212,22 @@ async obtenerUsuarioYId(): Promise<{ id: number, email: string, tipo: string } |
   }
 
 
+  async registrarIngreso(usuario: { id: number; nombre: string; apellido: string; email: string; }) 
+  {
+    const supabase = this.getSupabaseClient();
+
+    const { error } = await supabase.from('log_ingresos').insert([{
+      usuario_id: usuario.id,
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      email: usuario.email,
+      fecha_hora: new Date().toISOString()
+    }]);
+
+    if (error) {
+      console.error('Error registrando ingreso:', error);
+    }
+  }
 
 
   

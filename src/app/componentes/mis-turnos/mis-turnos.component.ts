@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 export class MisTurnosComponent {
   turnos: any[] = [];
   turnosFiltrados: any[] = [];
+  filtroHistoria: string = '';
+
 
   filtroEspecialidad: string = '';
   filtroNombre: string = ''; 
@@ -69,28 +71,55 @@ export class MisTurnosComponent {
     await this.cargarTurnos();
   }
 
-  
   aplicarFiltro() 
   {
     const especialidad = this.filtroEspecialidad.toLowerCase().trim();
     const nombre = this.filtroNombre.toLowerCase().trim();
+    const historiaTexto = this.filtroHistoria.toLowerCase().trim();
 
     this.turnosFiltrados = this.turnos.filter(turno => {
-      const matchEspecialidad = especialidad === '' || turno.especialidad?.toLowerCase().includes(especialidad);
+      // FILTRO POR ESPECIALIDAD
+      const matchEspecialidad =
+        especialidad === '' || turno.especialidad?.toLowerCase().includes(especialidad);
 
+      // FILTRO POR NOMBRE (PACIENTE o ESPECIALISTA)
       let matchNombre = true;
+      const nombreCompleto = this.usuarioTipo === 'paciente'
+        ? `${turno.especialista?.nombre || ''} ${turno.especialista?.apellido || ''}`.toLowerCase()
+        : `${turno.paciente?.nombre || ''} ${turno.paciente?.apellido || ''}`.toLowerCase();
 
-      if (this.usuarioTipo === 'paciente') {
-        const nombreCompleto = `${turno.especialista?.nombre || ''} ${turno.especialista?.apellido || ''}`.toLowerCase();
-        matchNombre = nombre === '' || nombreCompleto.includes(nombre);
-      } else if (this.usuarioTipo === 'especialista') {
-        const nombreCompleto = `${turno.paciente?.nombre || ''} ${turno.paciente?.apellido || ''}`.toLowerCase();
-        matchNombre = nombre === '' || nombreCompleto.includes(nombre);
+      matchNombre = nombre === '' || nombreCompleto.includes(nombre);
+
+      // FILTRO POR HISTORIA CLÍNICA
+      let matchHistoria = true;
+      if (historiaTexto !== '') {
+        matchHistoria = false;
+        const historia = turno.historia_clinica;
+        if (historia) {
+          const valoresHistoria = [
+            historia.altura?.toString() || '',
+            historia.peso?.toString() || '',
+            historia.temperatura?.toString() || '',
+            historia.presion?.toLowerCase() || '',
+            ...Object.entries(historia.datos_dinamicos || {}).flatMap(
+              ([clave, valor]) => [String(clave).toLowerCase(), String(valor).toLowerCase()]
+            )
+
+          ].join(' ');
+
+          matchHistoria = historiaTexto
+            .split(' ')
+            .every(palabra => valoresHistoria.includes(palabra));
+        }
       }
 
-      return matchEspecialidad && matchNombre;
+      return matchEspecialidad && matchNombre && matchHistoria;
     });
   }
+
+
+
+  
   async cargarTurnos() {
     const usuario = await this.supabaseService.obtenerUsuarioYId();
     if (!usuario) return;
@@ -100,14 +129,31 @@ export class MisTurnosComponent {
 
     const supabase = this.supabaseService.getSupabaseClient();
 
-    let query = supabase.from('turnos').select('*').order('fecha', { ascending: true });
+    let query = supabase
+    .from('turnos')
+    .select(`
+      *,
+      historia_clinica ( altura, peso, temperatura, presion, datos_dinamicos ),
+      ${this.usuarioTipo === 'paciente'
+        ? 'especialista:usuarios!fk_especialista_id (nombre, apellido)'
+        : 'paciente:usuarios!fk_paciente_id (nombre, apellido)'
+      }
+    `)
+    .order('fecha', { ascending: true });
+
+    if (this.usuarioTipo === 'paciente') {
+      query = query.eq('paciente_id', this.usuarioId);
+    } else if (this.usuarioTipo === 'especialista') {
+      query = query.eq('especialista_id', this.usuarioId);
+    }
 
     if (this.usuarioTipo === 'paciente') {
       query = supabase
         .from('turnos')
         .select(`
           *,
-          especialista:usuarios!fk_especialista_id (nombre, apellido)
+          especialista:usuarios!fk_especialista_id (nombre, apellido),
+          historia_clinica(*)
         `)
         .eq('paciente_id', this.usuarioId);
     } else if (this.usuarioTipo === 'especialista') {
@@ -115,7 +161,8 @@ export class MisTurnosComponent {
         .from('turnos')
         .select(`
           *,
-          paciente:usuarios!fk_paciente_id (nombre, apellido)
+          paciente:usuarios!fk_paciente_id (nombre, apellido),
+          historia_clinica(*)
         `)
         .eq('especialista_id', this.usuarioId);
     }
@@ -168,7 +215,7 @@ export class MisTurnosComponent {
     return turno.estado === 'aceptado';
   }
 
-  // --- ACCIONES ---
+  // ACCIONES
 
   //rechazar turno
 

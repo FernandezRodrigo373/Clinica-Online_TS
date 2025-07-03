@@ -3,12 +3,19 @@
 
 </header>
 <div class="contenedor-historias">
+
   <div class="historiales-container">
     <div *ngIf="historias.length === 0">
       <p>No se encontraron atenciones finalizadas aún.</p>
     </div>
+      <div class="filtro-especialista">
+        <input 
+          type="text" 
+          placeholder="Buscar especialista" 
+          [(ngModel)]="filtroEspecialista" />
+      </div>
 
-    <div *ngFor="let historia of historias" class="card-historia">
+    <div *ngFor="let historia of historias | filtroHistoriasPorEspecialista:filtroEspecialista" class="card-historia">
       <h2>Historia Clínica</h2>
       <h3>Fecha: {{ historia.fecha | date:'shortDate' }}</h3>
       <p><strong>Especialista:</strong> {{ historia.especialista?.nombre }} {{ historia.especialista?.apellido }}</p>
@@ -16,10 +23,10 @@
 
       <h4>Datos Clínicos</h4>
       <ul>
-        <li><strong>Altura:</strong> {{ historia.historia_clinica?.altura }} cm</li>
-        <li><strong>Peso:</strong> {{ historia.historia_clinica?.peso }} kg</li>
-        <li><strong>Temperatura:</strong> {{ historia.historia_clinica?.temperatura }} °C</li>
-        <li><strong>Presión:</strong> {{ historia.historia_clinica?.presion }}</li>
+        <li><strong>Altura:</strong><span [innerHTML]="historia.historia_clinica?.altura | resaltarEdad"></span> cm</li>
+        <li><strong>Peso:</strong> <span [innerHTML]="historia.historia_clinica?.peso | resaltarEdad"></span> kg</li>
+        <li><strong>Temperatura:</strong> <span [innerHTML]="historia.historia_clinica?.temperatura | resaltarEdad"></span> °C</li>
+        <li><strong>Presión:</strong> <span [innerHTML]="historia.historia_clinica?.presion | resaltarEdad"></span></li>
       </ul>
 
       <div *ngIf="historia.historia_clinica?.datos_dinamicos">
@@ -44,15 +51,24 @@
     <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
     <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
     <p><strong>Email:</strong> {{ usuario.email }}</p>
-    <p><strong>Edad:</strong> {{ usuario.edad }}</p>
-    <p><strong>DNI:</strong> {{ usuario.dni }}</p>
+    <p><strong>Edad:</strong> <span [innerHTML]="usuario.edad | resaltarEdad"></span></p>
+    <p><strong>DNI: </strong> <span [innerHTML]="usuario.dni | resaltarEdad"></span></p>
 
-  <button class="btn-descarga" (click)="generarPdf()">Descargar PDF</button>
+  <button class="btn-descarga" (click)="generarPdf()" infoBoton="Descarga la historia clinicaa">Descargar historia clinica</button>
 
+  <div style="margin-top: 15px; font-size: 1.1rem; gap: 15px;" class="filtro-especialidad">
+    <label style="margin-bottom: 15px;" for="especialidadSelect">Descargar por especialidad:</label>
+    <select id="especialidadSelect" [(ngModel)]="especialidadSeleccionada">
+      <option value=""></option>
+      <option *ngFor="let esp of obtenerEspecialidadesUnicas()" [value]="esp">{{ esp }}</option>
+    </select>
+    <button style="background-color: #0d47a1; color: white; padding: 5px; border: none;"  (click)="descargarAtencionesPorEspecialidad()">Descargar Excel Especialidad</button>
   </div>
-</div>
 
-    <button class="boton-home" (click)="irAlMenu()">Volver al menu</button>
+    </div>
+  </div>
+
+    <button class="boton-home" (click)="irAlMenu()" rotar>Volver al menu</button>
 
 <footer class="footer">
   <p>Clínica Digital © 2025 - Todos los derechos reservados</p>

@@ -68,13 +68,20 @@ export class LoginComponent implements OnInit {
 
       const { data: usuarioData, error: usuarioError } = await supabase
         .from('usuarios')
-        .select('tipo, verificado, aprobado')
+        .select('tipo, verificado, aprobado, nombre, id, apellido, email')
         .eq('auth_uid', user.id)
         .single();
 
       if (usuarioError || !usuarioData) {
         throw new Error('No se pudieron obtener los datos del usuario.');
       }
+
+        await this.supabaseService.registrarIngreso({
+          id: usuarioData.id,
+          nombre: usuarioData.nombre,
+          apellido: usuarioData.apellido,
+          email: usuarioData.email
+        });
 
       if (!usuarioData.verificado && user.email_confirmed_at) {
         const { error: updateError } = await supabase

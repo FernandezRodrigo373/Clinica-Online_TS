@@ -21,13 +21,17 @@
     "@angular/platform-browser-dynamic": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@supabase/supabase-js": "^2.49.4",
+    "chart.js": "^4.5.0",
     "date-fns": "^4.1.0",
+    "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "moment": "^2.30.1",
     "ng-recaptcha": "^13.2.1",
+    "ng2-charts": "^4.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

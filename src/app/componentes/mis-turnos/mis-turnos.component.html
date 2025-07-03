@@ -13,11 +13,21 @@
 
     <input
       type="text"
-      [placeholder]="'Filtrar por ' + (usuarioTipo === 'paciente' ? 'especialista' : 'paciente')"
+      [placeholder]="'Filtrar por ' + (usuarioTipo === 'paciente' ? 'especialista o historia clínica' : 'paciente o historia clínica')"
       [(ngModel)]="filtroNombre"
       (input)="aplicarFiltro()"
       class="filtro-input"
     />
+
+    <input
+      type="text"
+      placeholder="Filtrar por historia clínica"
+      [(ngModel)]="filtroHistoria"
+      (input)="aplicarFiltro()"
+      class="filtro-input"
+    />
+
+
   </div>
 
   <!-- Lista de turnos -->

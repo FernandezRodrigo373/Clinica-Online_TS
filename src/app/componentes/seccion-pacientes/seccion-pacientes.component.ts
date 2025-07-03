@@ -14,12 +14,9 @@ import { Router } from '@angular/router';
 export class SeccionPacientesComponent implements OnInit {
 
   usuario: any = null;
-  pacienteBuscado: string = '';
-  pacientesFiltrados: any[] = [];
-  pacienteSeleccionado: any = null;
+  pacientesConTurnos: any[] = [];
+  pacienteConHistoriaId: number | null = null;
   historias: any[] = [];
-  mensajeError: string | null = null;
-  pacientesDelEspecialista: Set<number> = new Set();
 
   constructor(private supabaseService: SupabaseService, private router: Router) {}
 
@@ -27,67 +24,55 @@ export class SeccionPacientesComponent implements OnInit {
     this.usuario = await this.supabaseService.obtenerDatosUsuarioCompleto();
     if (!this.usuario || this.usuario.tipo !== 'especialista') return;
 
-    //pacientes que haya atendido al menos una vez
-    const supabase = this.supabaseService.getSupabaseClient();
-    const { data, error } = await supabase
-      .from('turnos')
-      .select('paciente_id')
-      .eq('estado', 'realizado')
-      .eq('especialista_id', this.usuario.id);
-
-    if (!error && data) {
-      data.forEach(t => this.pacientesDelEspecialista.add(t.paciente_id));
-    }
-  }
-
-  async obtenerInputPaciente(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.pacienteBuscado = value;
-    await this.buscarPacientes(value);
-  }
-
-  async buscarPacientes(dni: string) {
-    if (!dni || dni.trim().length < 3) {
-      this.pacientesFiltrados = [];
-      return;
-    }
-
-    if (this.pacientesDelEspecialista.size === 0) {
-      this.pacientesFiltrados = [];
-      return;
-    }
-
-    const supabase = this.supabaseService.getSupabaseClient();
-    const { data, error } = await supabase
-      .from('usuarios')
-      .select('id, nombre, apellido, dni, email, edad, imagen1, especialidades')
-      .ilike('dni', `%${dni}%`)
-      .eq('tipo', 'paciente');
-
-    if (error || !data) {
-      console.error('Error buscando pacientes:', error);
-      this.pacientesFiltrados = [];
-      return;
-    }
-
-    // solo mostrar pacientes que fueron atendidos por este especialista
-    this.pacientesFiltrados = data.filter(p => this.pacientesDelEspecialista.has(p.id));
-  }
-
-  seleccionarPaciente(paciente: any) {
-    this.pacienteSeleccionado = paciente;
-    this.pacienteBuscado = paciente.dni;
-    this.pacientesFiltrados = [];
-    this.obtenerHistoriasDelPaciente(paciente.id);
-  }
-
-  async obtenerHistoriasDelPaciente(pacienteId: number) {
     const supabase = this.supabaseService.getSupabaseClient();
 
     const { data, error } = await supabase
       .from('turnos')
       .select(`
-        id,
+        paciente_id,
+        fecha,
+        paciente:usuarios!fk_paciente_id(id, nombre, apellido, dni, email, edad, imagen1),
+        historia_clinica(altura, peso, temperatura, presion, datos_dinamicos)
+      `)
+      .eq('estado', 'realizado')
+      .eq('especialista_id', this.usuario.id)
+      .order('fecha', { ascending: false });
+
+    if (error) {
+      console.error('Error cargando turnos:', error);
+      return;
+    }
+
+    const agrupados = new Map<number, any>();
+
+    for (const turno of data || []) {
+      const id = turno.paciente_id;
+      if (!agrupados.has(id)) {
+        agrupados.set(id, {
+          paciente: turno.paciente,
+          turnos: []
+        });
+      }
+
+      if (agrupados.get(id).turnos.length < 3) {
+        agrupados.get(id).turnos.push({
+          fecha: turno.fecha,
+          historia_clinica: turno.historia_clinica
+        });
+      }
+    }
+
+    this.pacientesConTurnos = Array.from(agrupados.values());
+  }
+
+  async verHistoria(pacienteId: number) {
+    this.pacienteConHistoriaId = pacienteId;
+
+    const supabase = this.supabaseService.getSupabaseClient();
+
+    const { data, error } = await supabase
+      .from('turnos')
+      .select(`
         fecha,
         especialista:usuarios!fk_especialista_id(nombre, apellido),
         historia_clinica(altura, peso, temperatura, presion, datos_dinamicos)
@@ -109,5 +94,4 @@ export class SeccionPacientesComponent implements OnInit {
   irAlMenu() {
     this.router.navigate(['/home']);
   }
-
 }

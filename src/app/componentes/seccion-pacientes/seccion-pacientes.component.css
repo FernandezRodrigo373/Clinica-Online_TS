@@ -6,6 +6,9 @@
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
 }
 
 
@@ -123,4 +126,38 @@ input[type="text"]:focus {
 .boton-home:hover {
   background-color: #218838;
 }
+
+.card-paciente {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #88b0ec;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1.2rem;
+  width: 400px;
+  align-items: center;
+}
+
+.card-paciente img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ultimos-turnos ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.historia-clinica {
+  margin-top: 1rem;
+  background-color: #eef6ff;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
 

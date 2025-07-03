@@ -66,6 +66,7 @@
   height: fit-content;
   max-height: calc(100vh - 40px);
   overflow-y: auto;
+  width: 350px;
 }
 
 .info-box h2 {
@@ -157,7 +158,7 @@
 
 .boton-home {
   position: fixed;
-  bottom: 20px;
+  bottom: 80px;
   left: 20px;
   background-color: #28a745;
   color: white;
@@ -173,6 +174,17 @@
 
 .boton-home:hover {
   background-color: #218838;
+}
+
+.filtro-especialista input
+{
+  margin-bottom: 50px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 8px;
+  color: #000000;
 }
 
 

@@ -1,27 +1,40 @@
 <div class="home-container">
   <div class="titulo-container">
     <h1>Bienvenido a la Clinica Online</h1>
-    <h2>{{ emailUsuario }} - {{ tipoUsuario }}</h2>
-
+    <h2>{{ emailUsuario }} - {{ tipoUsuario ? (tipoUsuario | hacerMayus) : '' }}</h2>
   </div>
-
 
   <div class="botones">
-
-    <button *ngIf="mostrarBotonSeccion" class="secundarios"  type="button" (click)="irASeccionUsuarios()">Gestionar usuarios</button>
-    <button *ngIf="mostrarBotonSeccion" class="secundarios"  type="button" (click)="registrarUsuarios()">Registrar usuarios</button>
-    <button *ngIf="mostrarBotonSeccionEspecialista || mostrarBotonSeccionPaciente" class="secundarios"  type="button" (click)="registrarTurnos()">Ver mis turnos</button>
-    <button *ngIf="mostrarBotonSeccion" class="secundarios"  type="button" (click)="administrarTurnos()">Administrar turnos</button>
-    <button *ngIf="mostrarBotonSeccionEspecialista" class="secundarios"  type="button" (click)="irAMiPerfil()">Mi perfil</button>
-    <button *ngIf="mostrarBotonSeccionEspecialista" class="secundarios"  type="button" (click)="irASeccionPacientes()">Mis pacientes</button>
-    <button *ngIf="mostrarBotonSeccionPaciente || mostrarBotonSeccion" class="secundarios"  type="button" (click)="irASacarTurnos()">Reservar turnos</button>
-    <button *ngIf="mostrarBotonSeccionPaciente" class="secundarios"  type="button" (click)="irAMiPerfilPaciente()">Mi perfil</button>
-
-
+    <button 
+      *ngIf="mostrarBotonSeccion" class="secundarios" (click)="irASeccionUsuarios()" resaltarBoton>Gestionar usuarios
+    </button>
+    <button *ngIf="mostrarBotonSeccion" class="secundarios" type="button" (click)="registrarUsuarios()" resaltarBoton>
+      Registrar usuarios
+    </button>
+    <button *ngIf="mostrarBotonSeccionEspecialista || mostrarBotonSeccionPaciente" class="secundarios" type="button" (click)="registrarTurnos()"resaltarBoton>
+      Ver mis turnos
+    </button>
+    <button *ngIf="mostrarBotonSeccion" class="secundarios" type="button" (click)="administrarTurnos()"resaltarBoton>
+      Administrar turnos
+    </button>
+    <button *ngIf="mostrarBotonSeccion" class="secundarios" type="button" (click)="irAInformes()"resaltarBoton>
+      Ver informes
+    </button>
+    <button *ngIf="mostrarBotonSeccionEspecialista" class="secundarios" type="button" (click)="irAMiPerfil()"resaltarBoton>
+      Mi perfil
+    </button>
+    <button *ngIf="mostrarBotonSeccionEspecialista" class="secundarios" type="button" (click)="irASeccionPacientes()"resaltarBoton>
+      Mis pacientes
+    </button>
+    <button *ngIf="mostrarBotonSeccionPaciente || mostrarBotonSeccion" class="secundarios" type="button" (click)="irASacarTurnos()"resaltarBoton>
+      Reservar turnos
+    </button>
+    <button *ngIf="mostrarBotonSeccionPaciente" class="secundarios" type="button" (click)="irAMiPerfilPaciente()"resaltarBoton>
+      Mi perfil
+    </button>
   </div>
 
-
-    <div class="salida"  >
+  <div class="salida">
     <button (click)="cerrarSesion()">
       <img src="/assets/salida.png" alt="salida" style="width: 70px; height: 70px;" />
     </button>
