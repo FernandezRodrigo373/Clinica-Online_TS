@@ -122,15 +122,26 @@ Este proyecto consiste en una **plataforma web para una clínica online**, en la
 - Muestra la información personal del paciente.
 - Permite **ver la historia clinica del paciente**.
 - Se podra descargar un PDF con la historia clinica.
+- Se podra descargar un PDF por especialidad.
+  
   
 ![mi perfil pacientes](https://github.com/user-attachments/assets/60e42af4-c26c-47cd-9035-eef0d1d85aca)
+
+###  Informes (administrador)
+- Muestra informes de la clinica sobre los pacientes
+- Permite **ver logs de usuarios, especialidad mas solicitada, dia con mas turnos, cantidad de turnos por fecha/lapso de tiempo**.
+- Se podra descargar un PDF con la historia clinica.
+  
+![informes](https://github.com/user-attachments/assets/3e25745d-af87-42ed-bf59-79f19d476782)
+
+
 
 ---
 
 ##  Tecnologías utilizadas
 
 - Angular
-- Firebase
+- Supabase
 - HTML / CSS / TypeScript
 
 ---
